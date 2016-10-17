@@ -1,0 +1,41 @@
+CREATE TABLE `NewTable` (
+`user_id`  int NOT NULL AUTO_INCREMENT ,
+`user_name`  varchar(20) NOT NULL ,
+`user_pwd`  char(64) NOT NULL ,
+`user_status`  int NOT NULL COMMENT '0 停用 1 启用' ,
+`createtime`  datetime NOT NULL DEFAULT '' COMMENT '开户时间' ,
+`updatetime`  datetime NOT NULL DEFAULT '' COMMENT '更新登录时间' ,
+PRIMARY KEY (`user_id`)
+)
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
+CREATE TABLE `NewTable` (
+`group_id`  int NOT NULL AUTO_INCREMENT ,
+`group_name`  char(20) NOT NULL ,
+PRIMARY KEY (`group_id`)
+)
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
+CREATE TABLE `NewTable` (
+`u_g_id`  int NOT NULL AUTO_INCREMENT ,
+`user_id`  int NOT NULL ,
+`group_id`  int NOT NULL ,
+PRIMARY KEY (`u_g_id`),
+CONSTRAINT `ug_user` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT `ug_group` FOREIGN KEY (`group_id`) REFERENCES `t_group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
+CREATE TABLE `NewTable` (
+`menut_id`  int NOT NULL AUTO_INCREMENT ,
+`menu_name`  varchar(32) NOT NULL ,
+`menu_url`  varchar(64) NOT NULL ,
+`menu_parent`  int NOT NULL ,
+PRIMARY KEY (`menut_id`)
+)
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+;
+
