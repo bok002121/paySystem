@@ -3,6 +3,7 @@
     <wb-module deploy-name="paySystem">
         <wb-resource deploy-path="/" source-path="/WebRoot"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/conf"/>
         <property name="context-root" value="/paySystem"/>
         <property name="java-output-path" value="/paySystem/WebRoot/WEB-INF/classes"/>
     </wb-module>
