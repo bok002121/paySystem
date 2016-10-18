@@ -1,6 +1,7 @@
 package net.kjk.nutzbook.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
