@@ -40,7 +40,7 @@ $(function(){
 			</li>
 			<li class="tree-top"><a href="#" ref="xtgl">系统管理</a>
 			</li>
-			<ul show="true">
+			<ul>
 				<li><a href="index.html" ref="yhgl" target="content">用户管理</a>
 				</li>
 				<li><a href="header.html" ref="rzck" target="content">日志查看</a>

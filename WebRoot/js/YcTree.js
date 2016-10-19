@@ -28,7 +28,13 @@ $(function(){
                     $(this).next("ul").attr("show","true");
                 }
                 option._init();
-                return false; 
+                var url = $(this).find("a").first().attr("href");
+                if(!url)
+                    return false; 
+                else if(url == "#")
+                	return false;
+                else
+                	return true;
             });
             
             this.find("li").hover(

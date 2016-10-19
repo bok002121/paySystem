@@ -49,6 +49,16 @@ public class MyMenu
 		}
 		return -1;
 	}
+	
+	public int getChildSize()
+	{
+		return child.size();
+	}
+	
+	public MyMenu getChildById(int i)
+	{
+		return child.get(i);
+	}
 
 	private Boolean isChild(MyMenu m)
 	{
@@ -60,6 +70,15 @@ public class MyMenu
 			return false;
 		}
 	}
+	
+	/*
+	 * 判断是否有子菜单
+	 */
+	public Boolean isHasChild()
+	{
+		return !(child.isEmpty());
+	}
+	
 
 	public String getId()
 	{
