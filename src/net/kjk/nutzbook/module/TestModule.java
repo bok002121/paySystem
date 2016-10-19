@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import net.kjk.nutzbook.bean.MyMenu;
 import net.kjk.nutzbook.bean.Role;
 
@@ -19,9 +21,11 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Filters;
+import org.nutz.mvc.annotation.Ok;
 
 @IocBean
 @Filters()
+@At("/test")
 public class TestModule extends BaseModule
 {
 	@At
@@ -100,7 +104,8 @@ public class TestModule extends BaseModule
 	}
 	
 	@At
-	public void getMenu()
+	@Ok("jsp:jsp.test.getMenu")
+	public void getMenu(HttpSession session)
 	{
 		Sql sql = Sqls.queryRecord("select distinct(menu_id),menu_name,menu_url,menu_parent " +
 				"from t_user_group,t_group_menu,t_menu " +
@@ -131,12 +136,8 @@ public class TestModule extends BaseModule
 			
 			//System.out.println(Json.toJson(m));
 			myMenu.addChildMenu(m);
-
-		  // 继续你想做的事
-			//System.out.println(rs.getString("menu_parent"));
-			//menus.put(key, value)
 		}
 		
-		System.out.println(Json.toJson(myMenu));
+		session.setAttribute("menus", myMenu);
 	}
 }
