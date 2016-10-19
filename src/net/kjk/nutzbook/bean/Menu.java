@@ -21,6 +21,9 @@ public class Menu
 	
 	@Column("menu_parent")
 	private int parent;
+	
+	@Column("menu_grade")
+	private int grade;
 
 	public int getId()
 	{
@@ -61,6 +64,17 @@ public class Menu
 	{
 		this.parent = parent;
 	}
+
+	public int getGrade()
+	{
+		return grade;
+	}
+
+	public void setGrade(int grade)
+	{
+		this.grade = grade;
+	}
+	
 	
 	
 }

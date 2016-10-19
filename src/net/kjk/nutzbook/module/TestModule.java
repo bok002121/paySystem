@@ -5,9 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import net.kjk.nutzbook.bean.Role;
 import net.kjk.nutzbook.bean.MyMenu;
+import net.kjk.nutzbook.bean.Role;
 
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Sqls;
@@ -77,18 +78,22 @@ public class TestModule extends BaseModule
 	@At
 	public void daoSql2Test()
 	{
-		Sql sql = Sqls.queryRecord("select distinct(menu_id) menu_name,menu_url,menu_parent " +
+		Sql sql = Sqls.queryRecord("select distinct(menu_id),menu_name,menu_url,menu_parent " +
 				"from t_user_group,t_group_menu,t_menu " +
 				"where t_user_group.user_id=@id " +
 				"and t_group_menu.group_id = t_user_group.group_id " +
-				"and t_group_menu.menu_id = t_menu.menut_id;");
+				"and t_group_menu.menu_id = t_menu.menut_id " + 
+				"order by menu_grade asc,menu_id asc;");
 		sql.params().set("id", 1);
 		
 		dao.execute(sql);
 		List<String> list = new LinkedList<String>();
 		List<Record> rs = sql.getList(Record.class);
 		for (Record re : rs) {
+			list.add(re.getString("menu_id"));
 			list.add(re.getString("menu_name"));
+			list.add(re.getString("menu_url"));
+			list.add(re.getString("menu_parent"));
 		  // 继续你想做的事
 		}
 		System.out.println(Json.toJson(list));
@@ -97,24 +102,41 @@ public class TestModule extends BaseModule
 	@At
 	public void getMenu()
 	{
-		Sql sql = Sqls.queryRecord("select distinct(menu_id) menu_name,menu_url,menu_parent " +
+		Sql sql = Sqls.queryRecord("select distinct(menu_id),menu_name,menu_url,menu_parent " +
 				"from t_user_group,t_group_menu,t_menu " +
 				"where t_user_group.user_id=@id " +
 				"and t_group_menu.group_id = t_user_group.group_id " +
-				"and t_group_menu.menu_id = t_menu.menut_id;");
+				"and t_group_menu.menu_id = t_menu.menut_id " + 
+				"order by menu_grade asc,menu_id asc;");
 		sql.params().set("id", 1);
 		
 		dao.execute(sql);
 		
 		MyMenu myMenu = new MyMenu();
+		myMenu.setId("1");
 		myMenu.setName("欢迎使用");
 		myMenu.setUrl("#");
+		myMenu.setParent("-1");
 		
+		//Map<String,MyMenu> menus;
 		
 		List<Record> results = sql.getList(Record.class);
 		for (Record rs : results) {
-			rs.getString("menu_name");
+			MyMenu m = new MyMenu();
+			
+			m.setId(rs.getString("menu_id"));
+			m.setName(rs.getString("menu_name"));
+			m.setUrl(rs.getString("menu_url"));
+			m.setParent(rs.getString("menu_parent"));
+			
+			//System.out.println(Json.toJson(m));
+			myMenu.addChildMenu(m);
+
 		  // 继续你想做的事
+			//System.out.println(rs.getString("menu_parent"));
+			//menus.put(key, value)
 		}
+		
+		System.out.println(Json.toJson(myMenu));
 	}
 }
