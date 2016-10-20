@@ -16,11 +16,11 @@ public class RoleService extends IdNameEntityService<Role>
 {
 	public MyMenu getMenu(int userId)
 	{
-		Sql sql = Sqls.queryRecord("select distinct(menu_id),menu_name,menu_url,menu_parent " +
+		Sql sql = Sqls.queryRecord("select distinct(t_menu.menu_id),menu_name,menu_url,menu_parent " +
 				"from t_user_group,t_group_menu,t_menu " +
 				"where t_user_group.user_id=@id " +
 				"and t_group_menu.group_id = t_user_group.group_id " +
-				"and t_group_menu.menu_id = t_menu.menut_id " + 
+				"and t_group_menu.menu_id = t_menu.menu_id " + 
 				"order by menu_grade asc,menu_id asc;");
 		sql.params().set("id", 1);
 		
@@ -43,7 +43,7 @@ public class RoleService extends IdNameEntityService<Role>
 			m.setUrl(rs.getString("menu_url"));
 			m.setParent(rs.getString("menu_parent"));
 			
-			
+			//System.out.println(Json.toJson(m));
 			myMenu.addChildMenu(m);
 		}
 		

@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,net.kjk.nutzbook.bean.MyMenu" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="description" content="This is my page">
 <link rel="shortcut icon" href="image/favicon.ico">
 <link rel="stylesheet" type="text/css" href="css/SimpleTree.css">
+<link rel="stylesheet" type="text/css" href="css/SimpleTree.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/YcTree.js"></script>
 <!--
@@ -32,36 +33,62 @@ $(function(){
     });
 });
 </script>
+<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
 </head>
+
 <body>
+    
+    <%!
+        String s1_top_id = "<li class=\"tree-top\" id=";
+        String s1_nor_id = "<li id=";
+        String s2_url = "\"><a href=\"",s3_name = "\">",s4_end = "</a></li>";
+        String s5_ul1 = "<ul>",s6_ul2 = "</ul>";
+        String s7_ul_first = "<ul show=\"true\">";
+        
+        String showMenu(MyMenu m)
+        {
+            String rs = "";
+            String t = "";
+		    // 判断是否有子菜单
+		    if( m.isHasChild())
+		    {
+		       //t = s1_top_id + m.getId() + s2_url + m.getUrl() + s3_name + m.getName() + s4_end; 
+		       t = s1_top_id + m.getId() + s2_url + "#" + s3_name + m.getName() + s4_end; 
+		       if(m.getName().equals("欢迎使用"))
+		       {
+		    	  t = t + s7_ul_first;
+		       }
+			   else
+			   {
+			       t = t + s5_ul1;
+			   }
+			   rs = rs + t;
+			   // 用的话，孩子遍历
+			   for(int i = 0;i<m.getChildSize();i++)
+			   {
+			       rs = rs + showMenu(m.getChildById(i));
+			   }
+			   rs = rs + s6_ul2;
+			}
+			else
+			{
+			    t = s1_nor_id + m.getId() + s2_url + m.getUrl() + s3_name + m.getName() + s4_end;
+			    rs = rs + t;
+			}
+			
+            return rs;
+        }
+     %>
+	<% MyMenu m = (MyMenu)(session.getAttribute("menus")); %>
 	<div class="st_tree">
 		<ul>
-			<li class="tree-top"><a href="#" ref="hyjm">欢迎界面</a>
-			</li>
-			<li class="tree-top"><a href="#" ref="xtgl">系统管理</a>
-			</li>
-			<ul>
-				<li><a href="index.html" ref="yhgl" target="content">用户管理</a>
-				</li>
-				<li><a href="header.html" ref="rzck" target="content">日志查看</a>
-				</li>
-			</ul>
-			<li class="tree-top"><a href="#" ref="ckgl">仓库管理</a>
-			</li>
-			<ul>
-				<li><a href="#" ref="kcgl">库存管理</a>
-				</li>
-				<li><a href="#" ref="shgl">收货管理</a>
-				</li>
-				<li class="tree-top"><a href="#" ref="fhgl">发货管理</a>
-				</li>
-				<ul>
-					<li><a href="#" ref="yhgl">用户管理</a>
-					</li>
-					<li><a href="#" ref="rzck">日志查看</a>
-					</li>
-				</ul>
-			</ul>
+			<%
+			    out.write(showMenu(m));
+			 %>
 		</ul>
 	</div>
+</body>
 </html>

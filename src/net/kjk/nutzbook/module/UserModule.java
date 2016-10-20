@@ -55,6 +55,7 @@ public class UserModule extends BaseModule
 			// 获取权限
 			
 			// 设置 session
+			//session.setAttribute("menus", myMenu);
 			
 			// 返回
 			return re.setv("ok",true).setv("msg", "good");

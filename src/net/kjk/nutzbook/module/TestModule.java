@@ -82,11 +82,11 @@ public class TestModule extends BaseModule
 	@At
 	public void daoSql2Test()
 	{
-		Sql sql = Sqls.queryRecord("select distinct(menu_id),menu_name,menu_url,menu_parent " +
+		Sql sql = Sqls.queryRecord("select distinct(t_menu.menu_id),menu_name,menu_url,menu_parent " +
 				"from t_user_group,t_group_menu,t_menu " +
 				"where t_user_group.user_id=@id " +
 				"and t_group_menu.group_id = t_user_group.group_id " +
-				"and t_group_menu.menu_id = t_menu.menut_id " + 
+				"and t_group_menu.menu_id = t_menu.menu_id " + 
 				"order by menu_grade asc,menu_id asc;");
 		sql.params().set("id", 1);
 		
@@ -107,11 +107,11 @@ public class TestModule extends BaseModule
 	@Ok("jsp:jsp.test.getMenu")
 	public void getMenu(HttpSession session)
 	{
-		Sql sql = Sqls.queryRecord("select distinct(menu_id),menu_name,menu_url,menu_parent " +
+		Sql sql = Sqls.queryRecord("select distinct(t_menu.menu_id),menu_name,menu_url,menu_parent " +
 				"from t_user_group,t_group_menu,t_menu " +
 				"where t_user_group.user_id=@id " +
 				"and t_group_menu.group_id = t_user_group.group_id " +
-				"and t_group_menu.menu_id = t_menu.menut_id " + 
+				"and t_group_menu.menu_id = t_menu.menu_id " + 
 				"order by menu_grade asc,menu_id asc;");
 		sql.params().set("id", 1);
 		
@@ -145,11 +145,11 @@ public class TestModule extends BaseModule
 	@Ok("jsp:jsp.test.getMenuDi")
 	public void getMenuDi(HttpSession session)
 	{
-		Sql sql = Sqls.queryRecord("select distinct(menu_id),menu_name,menu_url,menu_parent " +
+		Sql sql = Sqls.queryRecord("select distinct(t_menu.menu_id),menu_name,menu_url,menu_parent " +
 				"from t_user_group,t_group_menu,t_menu " +
 				"where t_user_group.user_id=@id " +
 				"and t_group_menu.group_id = t_user_group.group_id " +
-				"and t_group_menu.menu_id = t_menu.menut_id " + 
+				"and t_group_menu.menu_id = t_menu.menu_id " + 
 				"order by menu_grade asc,menu_id asc;");
 		sql.params().set("id", 1);
 		
