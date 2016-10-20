@@ -1,9 +1,7 @@
 package net.kjk.nutzbook;
 
-import net.kjk.nutzbook.bean.User;
-import net.kjk.nutzbook.service.UserService;
-
 import org.nutz.dao.Dao;
+
 import org.nutz.dao.util.Daos;
 import org.nutz.ioc.Ioc;
 import org.nutz.mvc.NutConfig;
@@ -17,6 +15,7 @@ public class MainSetup implements Setup
 		Dao dao = ioc.get(Dao.class);
 		Daos.createTablesInPackage(dao, "net.kjk.nutzbook", false);
 		
+		System.out.println(dao.sqls().count());
 //		if(dao.count(User.class) == 0)
 //		{
 //			UserService us = ioc.get(UserService.class);

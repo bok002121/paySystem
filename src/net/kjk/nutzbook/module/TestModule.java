@@ -178,4 +178,45 @@ public class TestModule extends BaseModule
 		
 		session.setAttribute("menus", myMenu);
 	}
+	
+	@At
+	@Ok("jsp:jsp.test.getMenuDi")
+	public void getMenuByIoc(HttpSession session)
+	{
+		Sql sql = dao.sqls().create("getMenu.data");
+		
+		sql.params().set("id", 1);
+		
+		sql.setCallback(new SqlCallback() {
+	        public Object invoke(Connection conn, ResultSet rs, Sql sql) throws SQLException {
+	        	
+	        	MyMenu myMenu = new MyMenu();
+	    		myMenu.setId("1");
+	    		myMenu.setName("欢迎使用");
+	    		myMenu.setUrl("#");
+	    		myMenu.setParent("-1");
+	    		
+	            while (rs.next()){
+	    			MyMenu m = new MyMenu();
+	    			
+	    			m.setId(rs.getString("menu_id"));
+	    			m.setName(rs.getString("menu_name"));
+	    			m.setUrl(rs.getString("menu_url"));
+	    			m.setParent(rs.getString("menu_parent"));
+	    			
+	    			//System.out.println(Json.toJson(m));
+	    			myMenu.addChildMenu(m);
+	    		}
+	            System.out.println("callback end");
+	            return myMenu;
+	        }
+	    });
+		
+		dao.execute(sql);
+		System.out.println("execute end");
+		
+		MyMenu myMenu = sql.getObject(MyMenu.class);
+		
+		session.setAttribute("menus", myMenu);
+	}
 }
