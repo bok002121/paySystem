@@ -42,9 +42,9 @@ $(function(){
 <body>
     
     <%!
-        String s1_top_id = "<li class=\"tree-top\" id=";
+        
         String s1_nor_id = "<li id=";
-        String s2_url = "\"><a href=\"",s3_name = "\">",s4_end = "</a></li>";
+        String s2_url = "\"><a href=\"",s3_name ="\" target=\"content\">",s4_end = "</a></li>";
         String s5_ul1 = "<ul>",s6_ul2 = "</ul>";
         String s7_ul_first = "<ul show=\"true\">";
         
@@ -55,8 +55,8 @@ $(function(){
 		    // 判断是否有子菜单
 		    if( m.isHasChild())
 		    {
-		       //t = s1_top_id + m.getId() + s2_url + m.getUrl() + s3_name + m.getName() + s4_end; 
-		       t = s1_top_id + m.getId() + s2_url + "#" + s3_name + m.getName() + s4_end; 
+		       //t = s1_nor_id + m.getId() + s2_url + m.getUrl() + s3_name + m.getName() + s4_end; 
+		       t = s1_nor_id + m.getId() + s2_url + "#" + s3_name + m.getName() + s4_end; 
 		       if(m.getName().equals("欢迎使用"))
 		       {
 		    	  t = t + s7_ul_first;

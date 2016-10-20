@@ -21,28 +21,11 @@ $(function(){
             };/* option._init() End */
             
             /* 菜单栏目被点击的时候 */
-            /*
-            this.find(".tree-top").click(function(){
-                if($(this).next("ul").attr("show")=="true"){
-                    $(this).next("ul").attr("show","false");                    
-                }else{
-                    $(this).next("ul").attr("show","true");
-                }
-                option._init();
-                var url = $(this).find("a").first().attr("href");
-                if(!url)
-                    return false; 
-                else if(url == "#")
-                	return false;
-                else
-                	return true;
-            });
-            */
+            
             this.find("li").click(function(){
                 var url = $(this).find("a").first().attr("href");
-                if(!url)
-                    return false; 
-                else if(url == "#"){
+ 
+                if(!url || url == "#"){
                 	if($(this).next("ul").attr("show")=="true"){
                         $(this).next("ul").attr("show","false");                    
                     }else{

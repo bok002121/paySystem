@@ -41,7 +41,6 @@ $(function(){
 <body>
     
     <%!
-        String s1_top_id = "<li class=\"tree-top\" id=";
         String s1_nor_id = "<li id=";
         String s2_url = "\"><a href=\"",s3_name = "\">",s4_end = "</a></li>";
         String s5_ul1 = "<ul>",s6_ul2 = "</ul>";
@@ -52,7 +51,7 @@ $(function(){
 		<ul>
 			<%-- 显示顶级菜单 ,先写屎吧--%>
 			<%  
-			    String t = s1_top_id + m.getId() + s2_url + m.getUrl() + s3_name + m.getName() + s4_end 
+			    String t = s1_nor_id + m.getId() + s2_url + m.getUrl() + s3_name + m.getName() + s4_end 
 			               + s7_ul_first;
 			    out.write(t);
                 for(int i = 0; i < m.getChildSize();i++)
@@ -62,9 +61,9 @@ $(function(){
                    if(c.isHasChild())
                    {
                        //有的话，顶级菜单
-                       //t = s1_top_id + c.getId() + s2_url + c.getUrl() + s3_name + c.getName() + s4_end 
+                       //t = s1_nor_id + c.getId() + s2_url + c.getUrl() + s3_name + c.getName() + s4_end 
 			           //    + s5_ul1;
-			           t = s1_top_id + c.getId() + s2_url + "#" + s3_name + c.getName() + s4_end 
+			           t = s1_nor_id + c.getId() + s2_url + "#" + s3_name + c.getName() + s4_end 
 			               + s5_ul1;
 			           out.write(t);
 			           for(int k = 0; k < c.getChildSize();k++)
@@ -74,9 +73,9 @@ $(function(){
                           if(c2.isHasChild())
                           {
                               //有的话，顶级菜单
-                              //t = s1_top_id + c2.getId() + s2_url + c2.getUrl() + s3_name + c2.getName() + s4_end 
+                              //t = s1_nor_id + c2.getId() + s2_url + c2.getUrl() + s3_name + c2.getName() + s4_end 
 			                  //    + s5_ul1;
-			                  t = s1_top_id + c2.getId() + s2_url + "#" + s3_name + c2.getName() + s4_end 
+			                  t = s1_nor_id + c2.getId() + s2_url + "#" + s3_name + c2.getName() + s4_end 
 			                      + s5_ul1;
 			                  out.write(t);
 			                  // 遍历四级菜单
@@ -87,9 +86,9 @@ $(function(){
                                  if(c3.isHasChild())
                                  {
                                      //有的话，顶级菜单
-                                     //t = s1_top_id + c3.getId() + s2_url + c3.getUrl() + s3_name + c3.getName() + s4_end 
+                                     //t = s1_nor_id + c3.getId() + s2_url + c3.getUrl() + s3_name + c3.getName() + s4_end 
 			                         //    + s5_ul1;
-			                         t = s1_top_id + c3.getId() + s2_url + "#" + s3_name + c3.getName() + s4_end 
+			                         t = s1_nor_id + c3.getId() + s2_url + "#" + s3_name + c3.getName() + s4_end 
 			                             + s5_ul1;
 			                         out.write(t);
                                  }
