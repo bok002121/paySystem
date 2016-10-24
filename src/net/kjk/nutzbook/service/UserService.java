@@ -11,6 +11,7 @@ import org.nutz.service.IdNameEntityService;
 @IocBean(fields="dao")
 public class UserService extends IdNameEntityService<User>
 {
+	
 	public User fetch(String username, String password) {
         User user = fetch(username);
         if (user == null) {

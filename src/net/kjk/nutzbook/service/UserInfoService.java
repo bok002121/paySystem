@@ -8,9 +8,24 @@ import org.nutz.service.IdNameEntityService;
 @IocBean(fields="dao")
 public class UserInfoService extends IdNameEntityService<UserInfo>
 {
+    
 	public Boolean addPerson(UserInfo info)
 	{
 		dao().insert(info);
 		return true;
+	}
+	
+	public UserInfo fetch(int userid)
+	{
+		UserInfo i = dao().fetch(UserInfo.class,userid); 
+		
+		if( i == null)
+			return null;
+		return i;
+	}
+	
+	public void delete(int userid)
+	{
+		dao().delete(UserInfo.class,userid);
 	}
 }

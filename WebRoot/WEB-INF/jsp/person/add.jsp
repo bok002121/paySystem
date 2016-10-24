@@ -34,24 +34,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   });
   </script>
 <body>
-<% UserInfo i = (UserInfo)(request.getAttribute("defaul")); %>
+
 <div id="addPerson_div">
 	<form action="#" method="post" id="addPerson_form">
 		<label for="name">姓名: </label>
-		<input type="text" name="name" id="name" value="<%= i.getName()%>"/> <br /> 
+		<input type="text" name="name" id="name" /> <br /> 
 		
 		<label>性别: </label>
 		<label for="male">男 </label> <input type="radio" name="sex" id="male" value="男" checked="true"/>
         <label for="female">女 </label> <input type="radio" name="sex" id="female" value="女" /><br />
         
         <label for="birthday">出生年月: </label>
-        <input type="text" class="datepicker" name="birthday" id="birthday" value="<%= i.getBirthday()%>"/><br />
+        <input type="text" class="datepicker" name="birthday" id="birthday"/><br />
         
         <label for="id_card">身份证: </label>
-		<input type="text" name="idCard" id="id_card" value="<%= i.getIdCard()%>"/> <br />
+		<input type="text" name="idCard" id="id_card" "/> <br />
 		
 		 <label for="join_time">参加工作时间: </label>
-         <input type="text" class="datepicker" name="joinTime" id="joinTime" value="<%= i.getJoinTime()%>"/><br />
+         <input type="text" class="datepicker" name="joinTime" id="join_time" /><br />
 		 
 		 <label for="grade_id">职别: </label>
 		 <select name="gradeId" id="grade_id">
@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <br />
 		 
 		 <label for="ic_card">银行卡账号: </label>
-		 <input type="text" name="icCard" id="ic_card" value="<%= i.getIcCard()%>"/><br />
+		 <input type="text" name="icCard" id="ic_card"/><br />
 		 
 		 <label for="dep_id">部门: </label>
 		 <select name="depId" id="dep_id">
@@ -84,8 +84,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 </select>
 		 <br />
 		 
-		 <label for="jobno">工号: </label>
-		 <input type="text" name="jobNo" id="jobno" value="<%= i.getJobNo()%>"/><br />
+		 <label for="job_no">工号: </label>
+		 <input type="text" name="jobNo" id="job_no"/><br />
 		 
 		 <div id="tip" class="flash flash-error"></div>
 		 

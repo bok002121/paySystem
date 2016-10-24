@@ -7,7 +7,7 @@ import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
-@Table("t_user")
+@Table("t_user_info")
 public class UserInfo
 {
 	@Id
@@ -25,25 +25,27 @@ public class UserInfo
 	private Date birthday;
 	
 	@Column("id_card")
-	private String id_card;
+	private String idCard;
 	
 	@Column("join_time")
-	private String join_time;
+	private Date joinTime;
 	
 	@Column("grade_id")
-	private int grade_id;
+	private int gradeId;
 	
 	@Column("cate_id")
-	private int cate_id;
+	private int cateId;
 	
 	@Column("ic_card")
-	private String ic_card;
+	private String icCard;
 	
 	@Column("dep_id")
-	private int dep_id;
+	private int depId;
 	
 	@Column("jobno")
 	private String jobNo;
+	
+	public UserInfo(){}
 
 	public int getId()
 	{
@@ -85,64 +87,64 @@ public class UserInfo
 		this.birthday = birthday;
 	}
 
-	public String getId_card()
+	public String getIdCard()
 	{
-		return id_card;
+		return idCard;
 	}
 
-	public void setId_card(String id_card)
+	public void setIdCard(String idCard)
 	{
-		this.id_card = id_card;
+		this.idCard = idCard;
 	}
 
-	public String getJoin_time()
+	public Date getJoinTime()
 	{
-		return join_time;
+		return joinTime;
 	}
 
-	public void setJoin_time(String join_time)
+	public void setJoinTime(Date joinTime)
 	{
-		this.join_time = join_time;
+		this.joinTime = joinTime;
 	}
 
-	public int getGrade_id()
+	public int getGradeId()
 	{
-		return grade_id;
+		return gradeId;
 	}
 
-	public void setGrade_id(int grade_id)
+	public void setGradeId(int gradeId)
 	{
-		this.grade_id = grade_id;
+		this.gradeId = gradeId;
 	}
 
-	public int getCate_id()
+	public int getCateId()
 	{
-		return cate_id;
+		return cateId;
 	}
 
-	public void setCate_id(int cate_id)
+	public void setCateId(int cateId)
 	{
-		this.cate_id = cate_id;
+		this.cateId = cateId;
 	}
 
-	public String getIc_card()
+	public String getIcCard()
 	{
-		return ic_card;
+		return icCard;
 	}
 
-	public void setIc_card(String ic_card)
+	public void setIcCard(String icCard)
 	{
-		this.ic_card = ic_card;
+		this.icCard = icCard;
 	}
 
-	public int getDep_id()
+	public int getDepId()
 	{
-		return dep_id;
+		return depId;
 	}
 
-	public void setDep_id(int dep_id)
+	public void setDepId(int depId)
 	{
-		this.dep_id = dep_id;
+		this.depId = depId;
 	}
 
 	public String getJobNo()
@@ -154,7 +156,6 @@ public class UserInfo
 	{
 		this.jobNo = jobNo;
 	}
-	
-	
+
 	
 }

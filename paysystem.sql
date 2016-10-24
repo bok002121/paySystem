@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2016-10-20 17:18:00
+Date: 2016-10-24 17:03:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,10 +53,29 @@ CREATE TABLE `t_category` (
   `cate_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '类别 指代 在职/退休/遗嘱/聘用制',
   `cate_name` char(32) NOT NULL,
   PRIMARY KEY (`cate_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_category
+-- ----------------------------
+INSERT INTO `t_category` VALUES ('1', '在职');
+INSERT INTO `t_category` VALUES ('2', '退休');
+INSERT INTO `t_category` VALUES ('3', '遗属');
+INSERT INTO `t_category` VALUES ('4', '聘用制');
+
+-- ----------------------------
+-- Table structure for `t_departemnt`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_departemnt`;
+CREATE TABLE `t_departemnt` (
+  `dep_id` int(32) NOT NULL AUTO_INCREMENT,
+  `dep_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`dep_id`),
+  UNIQUE KEY `dep_name` (`dep_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_departemnt
 -- ----------------------------
 
 -- ----------------------------
@@ -67,11 +86,31 @@ CREATE TABLE `t_department` (
   `dep_id` int(11) NOT NULL AUTO_INCREMENT,
   `dep_name` varchar(64) NOT NULL,
   PRIMARY KEY (`dep_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_department
 -- ----------------------------
+INSERT INTO `t_department` VALUES ('1', '行领导');
+INSERT INTO `t_department` VALUES ('2', '办公室');
+INSERT INTO `t_department` VALUES ('3', '科技科');
+INSERT INTO `t_department` VALUES ('4', '货币信贷管理科');
+INSERT INTO `t_department` VALUES ('5', '调查统计科');
+INSERT INTO `t_department` VALUES ('6', '会计财务科');
+INSERT INTO `t_department` VALUES ('7', '征信管理课');
+INSERT INTO `t_department` VALUES ('8', '反洗钱科');
+INSERT INTO `t_department` VALUES ('9', '国库科');
+INSERT INTO `t_department` VALUES ('10', '人事科');
+INSERT INTO `t_department` VALUES ('11', '内审科');
+INSERT INTO `t_department` VALUES ('12', '纪检监察室');
+INSERT INTO `t_department` VALUES ('13', '宣传群工部');
+INSERT INTO `t_department` VALUES ('14', '货币金银科');
+INSERT INTO `t_department` VALUES ('15', '支付结算科');
+INSERT INTO `t_department` VALUES ('16', '保卫科');
+INSERT INTO `t_department` VALUES ('17', '国际收支科');
+INSERT INTO `t_department` VALUES ('18', '外汇管理科');
+INSERT INTO `t_department` VALUES ('19', '外汇检查科');
+INSERT INTO `t_department` VALUES ('20', '后勤服务中心');
 
 -- ----------------------------
 -- Table structure for `t_grade`
@@ -81,11 +120,17 @@ CREATE TABLE `t_grade` (
   `grade_id` int(11) NOT NULL AUTO_INCREMENT,
   `grade_name` char(32) NOT NULL,
   PRIMARY KEY (`grade_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_grade
 -- ----------------------------
+INSERT INTO `t_grade` VALUES ('1', '正处');
+INSERT INTO `t_grade` VALUES ('2', '副处');
+INSERT INTO `t_grade` VALUES ('3', '正科');
+INSERT INTO `t_grade` VALUES ('4', '副科');
+INSERT INTO `t_grade` VALUES ('5', '科员');
+INSERT INTO `t_grade` VALUES ('6', '办事员');
 
 -- ----------------------------
 -- Table structure for `t_group`
@@ -95,13 +140,14 @@ CREATE TABLE `t_group` (
   `group_id` int(11) NOT NULL AUTO_INCREMENT,
   `group_name` char(20) NOT NULL,
   PRIMARY KEY (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_group
 -- ----------------------------
 INSERT INTO `t_group` VALUES ('1', 'admin');
 INSERT INTO `t_group` VALUES ('2', 'test');
+INSERT INTO `t_group` VALUES ('3', 'basic');
 
 -- ----------------------------
 -- Table structure for `t_group_auth`
@@ -135,7 +181,7 @@ CREATE TABLE `t_group_menu` (
   KEY `gm_menu` (`menu_id`),
   CONSTRAINT `gm_group` FOREIGN KEY (`group_id`) REFERENCES `t_group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `gm_menu` FOREIGN KEY (`menu_id`) REFERENCES `t_menu` (`menu_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_group_menu
@@ -172,6 +218,9 @@ INSERT INTO `t_group_menu` VALUES ('31', '1', '19');
 INSERT INTO `t_group_menu` VALUES ('32', '1', '20');
 INSERT INTO `t_group_menu` VALUES ('33', '1', '21');
 INSERT INTO `t_group_menu` VALUES ('34', '1', '22');
+INSERT INTO `t_group_menu` VALUES ('35', '3', '3');
+INSERT INTO `t_group_menu` VALUES ('36', '3', '4');
+INSERT INTO `t_group_menu` VALUES ('37', '3', '5');
 
 -- ----------------------------
 -- Table structure for `t_menu`
@@ -267,16 +316,22 @@ CREATE TABLE `t_user_info` (
   `birthday` date NOT NULL,
   `id_card` char(20) NOT NULL,
   `join_time` date NOT NULL,
-  `grade_name` char(32) NOT NULL,
-  `cate_name` char(64) NOT NULL,
+  `grade_id` int(32) NOT NULL,
+  `cate_id` int(64) NOT NULL,
   `ic_card` char(32) NOT NULL,
-  `dep_name` varchar(64) NOT NULL,
+  `dep_id` int(64) NOT NULL,
   `job_no` char(20) NOT NULL,
-  KEY `info_userid` (`user_id`),
+  PRIMARY KEY (`user_id`),
+  KEY `info_gradeid` (`grade_id`),
+  KEY `info_cateid` (`cate_id`),
+  KEY `info_depid` (`dep_id`),
+  CONSTRAINT `info_cateid` FOREIGN KEY (`cate_id`) REFERENCES `t_category` (`cate_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `info_depid` FOREIGN KEY (`dep_id`) REFERENCES `t_department` (`dep_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `info_gradeid` FOREIGN KEY (`grade_id`) REFERENCES `t_grade` (`grade_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `info_userid` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user_info
 -- ----------------------------
-INSERT INTO `t_user_info` VALUES ('2', 'test', '男', '1992-05-21', '441231199205213418', '2016-10-20', '科员', '在职', '1234567899876543210', '科技科', '0000');
+INSERT INTO `t_user_info` VALUES ('2', 'test', '男', '1992-05-21', '441231199205213418', '2016-10-20', '5', '1', '1234567899876543210', '3', '0000');

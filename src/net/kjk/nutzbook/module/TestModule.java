@@ -3,22 +3,27 @@ package net.kjk.nutzbook.module;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.kjk.nutzbook.bean.MyMenu;
 import net.kjk.nutzbook.bean.Role;
 import net.kjk.nutzbook.bean.UserInfo;
+import net.kjk.nutzbook.service.UserInfoService;
 
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.sql.Sql;
 import org.nutz.dao.sql.SqlCallback;
+import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
+import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
@@ -31,6 +36,7 @@ import org.nutz.mvc.annotation.Param;
 @At("/test")
 public class TestModule extends BaseModule
 {
+	@Inject protected UserInfoService userInfoService;
 	@At
 	public void daoTest()
 	{
@@ -226,16 +232,43 @@ public class TestModule extends BaseModule
 	@At
 	@GET
 	@Ok("jsp:jsp.test.addPerson")
-	public void addPerson(HttpSession session)
+	public void addPerson(HttpServletRequest req)
 	{
-		// 随机生成
+		// 随机生成一个UserInfo
+		UserInfo info = new UserInfo();
+		info.setId(2);
+		info.setName("test");
+		info.setSex("男");
+		info.setBirthday(new Date());
+		info.setIdCard("1234567890987654321");
+		info.setJoinTime(new Date());
+		info.setGradeId(5);
+		info.setCateId(1);
+		info.setIcCard("422341241412423");
+		info.setDepId(3);
+		info.setJobNo("0007");
+		
+		req.setAttribute("defaul", info);
 	}
 	
 	@At
 	@POST
-	@Ok("jsp:jsp.test.addPerson")
-	public void addPerson(@Param("..") UserInfo info,HttpSession session)
+	public Object addPerson(@Param("..") UserInfo info,HttpSession session)
 	{
+		NutMap re = new NutMap();
 		System.out.println(Json.toJson(info));
+		
+		return re.setv("ok",false);
+	}
+	
+	@At
+	public void fetchPerson()
+	{
+		UserInfo info = userInfoService.fetch(2);
+		if(info != null)
+		    System.out.println(Json.toJson(info));
+		else
+			System.out.println("null");
+
 	}
 }
