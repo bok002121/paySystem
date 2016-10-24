@@ -18,7 +18,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="description" content="This is my page">
 <link rel="shortcut icon" href="image/favicon.ico">
 <link rel="stylesheet" type="text/css" href="css/SimpleTree.css">
-<link rel="stylesheet" type="text/css" href="css/SimpleTree.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/YcTree.js"></script>
 <!--
@@ -42,9 +41,8 @@ $(function(){
 <body>
     
     <%!
-        
         String s1_nor_id = "<li id=";
-        String s2_url = "\"><a href=\"",s3_name ="\" target=\"content\">",s4_end = "</a></li>";
+        String s2_url = "\"><a href=\"",s3_name = "\">",s4_end = "</a></li>";
         String s5_ul1 = "<ul>",s6_ul2 = "</ul>";
         String s7_ul_first = "<ul show=\"true\">";
         
@@ -86,7 +84,10 @@ $(function(){
 	<div class="st_tree">
 		<ul>
 			<%
-			    out.write(showMenu(m));
+			    if( m!= null)
+			        out.write(showMenu(m));
+			    else
+			        out.write("session menu is not exist");
 			 %>
 		</ul>
 	</div>

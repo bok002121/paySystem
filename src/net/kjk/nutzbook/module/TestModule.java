@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import net.kjk.nutzbook.bean.MyMenu;
 import net.kjk.nutzbook.bean.Role;
+import net.kjk.nutzbook.bean.UserInfo;
 
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Sqls;
@@ -21,7 +21,10 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Filters;
+import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
+import org.nutz.mvc.annotation.POST;
+import org.nutz.mvc.annotation.Param;
 
 @IocBean
 @Filters()
@@ -218,5 +221,21 @@ public class TestModule extends BaseModule
 		MyMenu myMenu = sql.getObject(MyMenu.class);
 		
 		session.setAttribute("menus", myMenu);
+	}
+	
+	@At
+	@GET
+	@Ok("jsp:jsp.test.addPerson")
+	public void addPerson(HttpSession session)
+	{
+		// 随机生成
+	}
+	
+	@At
+	@POST
+	@Ok("jsp:jsp.test.addPerson")
+	public void addPerson(@Param("..") UserInfo info,HttpSession session)
+	{
+		System.out.println(Json.toJson(info));
 	}
 }

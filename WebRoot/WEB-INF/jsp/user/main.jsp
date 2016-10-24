@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <frame src="user/header" id="header" scrolling="no">
     <frameset cols="18%,*" id="bodyFrame">
         <frame src="user/menu" name="menu" id="menu" scrolling="auto">
-        <frame src="user" name="content" id="content" scrolling="auto">
+        <frame src="welcome.jsp" name="content" id="content" scrolling="auto">
     </frameset>
     <!-- 后期再来补充就好  -->
     <!--<frame src="footer.html" id="footer" scrolling="no" noresize="noresize">-->
