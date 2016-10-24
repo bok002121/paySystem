@@ -1,15 +1,3 @@
-/* sql1 */
-DROP TABLE t_abc
-
-
-/* 你可以随便写任何的注释文字，只有距离 SQL 语句最近的那一行注释，才会被认为是键值 */
-/* getpet*/
-SELECT * FROM t_pet WHERE id=@id
-
-
-/* listpets*/
-SELECT * FROM t_pet $condition
-
 /* getMenu.data */
 select distinct(t_menu.menu_id),menu_name,menu_url,menu_parent 
 from t_user_group,t_group_menu,t_menu 

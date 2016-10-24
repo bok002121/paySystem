@@ -21,7 +21,6 @@ public class MainSetup implements Setup
 //			UserService us = ioc.get(UserService.class);
 //            us.add("admin", "123456");
 //		}
-		System.out.println("test: 中文");
 		
 	}
 	
