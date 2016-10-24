@@ -1,6 +1,7 @@
 package net.kjk.nutzbook.service;
 
-import net.kjk.nutzbook.bean.Role;
+import java.util.Date;
+
 import net.kjk.nutzbook.bean.User;
 
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -24,9 +25,17 @@ public class UserService extends IdNameEntityService<User>
         return null;
     }
 	
-	public int InitUser(int userId)
-	{
-		Role role = dao().fetch(Role.class,userId);
-		return 1;
+	public int add(String name,String psw){
+		User u = new User();
+		
+		u.setName(name);
+		u.setPassword(psw);
+		u.setStatus(1);
+		u.setCreatetime(new Date());
+		u.setUpdatetime(new Date());
+		
+		User o = dao().insert(u);
+		
+		return o.getId();
 	}
 }

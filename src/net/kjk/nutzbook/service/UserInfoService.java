@@ -3,15 +3,18 @@ package net.kjk.nutzbook.service;
 import net.kjk.nutzbook.bean.UserInfo;
 
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.json.Json;
 import org.nutz.service.IdNameEntityService;
 
 @IocBean(fields="dao")
 public class UserInfoService extends IdNameEntityService<UserInfo>
 {
     
-	public Boolean addPerson(UserInfo info)
+	public Boolean add(int id,UserInfo info)
 	{
+		info.setId(id);
 		dao().insert(info);
+		System.out.println(Json.toJson(info));
 		return true;
 	}
 	

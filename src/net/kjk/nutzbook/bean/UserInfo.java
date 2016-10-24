@@ -10,7 +10,7 @@ import org.nutz.dao.entity.annotation.Table;
 @Table("t_user_info")
 public class UserInfo
 {
-	@Id
+	@Id(auto=false)
 	@Column("user_id")
 	private int id;
 	
@@ -42,7 +42,7 @@ public class UserInfo
 	@Column("dep_id")
 	private int depId;
 	
-	@Column("jobno")
+	@Column("job_no")
 	private String jobNo;
 	
 	public UserInfo(){}

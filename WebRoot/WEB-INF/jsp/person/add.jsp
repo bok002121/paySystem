@@ -29,7 +29,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <script>
   $(function() {
-     $(".datepicker" ).datepicker();
+     $(".datepicker" ).datepicker({
+      changeMonth: true,
+       changeYear: true});
      $(".datepicker" ).datepicker( "option", "dateFormat","yy-mm-dd");
   });
   </script>
@@ -48,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <input type="text" class="datepicker" name="birthday" id="birthday"/><br />
         
         <label for="id_card">身份证: </label>
-		<input type="text" name="idCard" id="id_card" "/> <br />
+		<input type="text" name="idCard" id="id_card" /> <br />
 		
 		 <label for="join_time">参加工作时间: </label>
          <input type="text" class="datepicker" name="joinTime" id="join_time" /><br />
@@ -80,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <select name="depId" id="dep_id">
 		     <option value="1" selected="selected">行领导</option>
 		     <option value="2">办公室</option>
-		     <option value="3" selected="selected">科技科</option>
+		     <option value="3" >科技科</option>
 		 </select>
 		 <br />
 		 
