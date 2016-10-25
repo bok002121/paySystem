@@ -37,6 +37,14 @@ import org.nutz.mvc.annotation.Param;
 public class TestModule extends BaseModule
 {
 	@Inject protected UserInfoService userInfoService;
+	
+	@At
+	public void fenye(){
+		
+	}
+	
+	
+	
 	@At
 	public void daoTest()
 	{

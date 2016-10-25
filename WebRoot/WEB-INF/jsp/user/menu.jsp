@@ -42,7 +42,7 @@ $(function(){
     
     <%!
         String s1_nor_id = "<li id=";
-        String s2_url = "\"><a href=\"",s3_name = "\">",s4_end = "</a></li>";
+        String s2_url = "\"><a target=\"content\" href=\"",s3_name = "\">",s4_end = "</a></li>";
         String s5_ul1 = "<ul>",s6_ul2 = "</ul>";
         String s7_ul_first = "<ul show=\"true\">";
         

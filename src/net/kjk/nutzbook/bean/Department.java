@@ -5,7 +5,7 @@ import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
-@Table("t_departemnt")
+@Table("t_department")
 public class Department
 {
 	@Id

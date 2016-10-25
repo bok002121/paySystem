@@ -1,8 +1,13 @@
 package net.kjk.nutzbook.module;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.kjk.nutzbook.bean.Category;
+import net.kjk.nutzbook.bean.Department;
+import net.kjk.nutzbook.bean.Grade;
 import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.service.UserService;
@@ -30,12 +35,16 @@ public class PersonModule extends BaseModule
 	public void add(HttpServletRequest req)
 	{
 		// 获取职别
-		
+		List<Grade> grades = dao.query(Grade.class,null);
+		req.setAttribute("grades", grades);
 		
 		// 获取类别
+		List<Category> cates = dao.query(Category.class,null);
+		req.setAttribute("cates", cates);
 		
 		// 获取部门
-		
+		List<Department> deps = dao.query(Department.class,null);
+		req.setAttribute("deps", deps);
 		
 	}
 	

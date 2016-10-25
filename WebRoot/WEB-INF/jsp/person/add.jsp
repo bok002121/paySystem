@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*,net.kjk.nutzbook.bean.UserInfo" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,net.kjk.nutzbook.bean.UserInfo,
+net.kjk.nutzbook.bean.Grade,net.kjk.nutzbook.bean.Department,net.kjk.nutzbook.bean.Category" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -37,6 +38,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </script>
 <body>
 
+<% List<Grade> g = (List<Grade>)request.getAttribute("grades"); 
+   List<Category> c = (List<Category>)request.getAttribute("cates"); 
+   List<Department> d = (List<Department>)request.getAttribute("deps");
+   String str1_val = "<option value =\"";
+   String str2_sel = "\"";
+   String str3_name = ">";
+   String str4_end = "</option>";
+   String sel = " selected=\"selected\"";
+   String t = "";
+%>
+<h3>-- 添加用户</h3>
+<hr />
 <div id="addPerson_div">
 	<form action="#" method="post" id="addPerson_form">
 		<label for="name">姓名: </label>
@@ -57,21 +70,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 
 		 <label for="grade_id">职别: </label>
 		 <select name="gradeId" id="grade_id">
-		     <option value ="1">正处</option>
-		     <option value ="2">副处</option>
-		     <option value ="3">正科</option>
-		     <option value ="4">副科</option>
-		     <option value ="5" selected="selected">科员</option>
-		     <option value ="6">办事员</option>
+		 <%  
+		      for(int i = 0; i < g.size(); i++)
+		      {
+		          Grade grade = g.get(i);
+		          if( grade.getGradeName().equals("科员"))
+		          {
+		              t = str1_val + grade.getGradeId() + str2_sel + sel + str3_name + grade.getGradeName()
+		                  + str4_end;
+		          }
+		          else
+		          {
+		              t = str1_val + grade.getGradeId() + str2_sel + str3_name + grade.getGradeName()
+		                  + str4_end;
+		          }
+		          out.write(t);
+		      }
+		  %>
 		 </select>
 		 <br />
 		 
 		 <label for="cate_id">类别: </label>
 		 <select name="cateId" id="cate_id">
-		     <option value ="1" selected="selected">在职</option>
-		     <option value ="2">退休</option>
-		     <option value ="3">遗属</option>
-		     <option value ="4">聘用制</option>
+		 <%  
+		      for(int i = 0; i < c.size(); i++)
+		      {
+		          Category cate = c.get(i);
+		          if( cate.getCateName().equals("在职"))
+		          {
+		              t = str1_val + cate.getCateId() + str2_sel + sel + str3_name + cate.getCateName()
+		                  + str4_end;
+		          }
+		          else
+		          {
+		              t = str1_val + cate.getCateId() + str2_sel + str3_name + cate.getCateName()
+		                  + str4_end;
+		          }
+		          out.write(t);
+		      }
+		  %>
 		 </select>
 		 <br />
 		 
@@ -80,9 +117,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 
 		 <label for="dep_id">部门: </label>
 		 <select name="depId" id="dep_id">
-		     <option value="1" selected="selected">行领导</option>
-		     <option value="2">办公室</option>
-		     <option value="3" >科技科</option>
+		 <%  
+		      for(int i = 0; i < d.size(); i++)
+		      {
+		          Department dep = d.get(i);
+		          if( dep.getDepName().equals("科技科"))
+		          {
+		              t = str1_val + dep.getDepId() + str2_sel + sel + str3_name + dep.getDepName()
+		                  + str4_end;
+		          }
+		          else
+		          {
+		              t = str1_val + dep.getDepId() + str2_sel + str3_name + dep.getDepName()
+		                  + str4_end;
+		          }
+		          out.write(t);
+		      }
+		  %>
 		 </select>
 		 <br />
 		 
@@ -92,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <div id="tip" class="flash flash-error"></div>
 		 
 		 <input type="submit" value="提交"/>&nbsp;&nbsp;
-		 <input type="reset" value="重置"/>
+		 <input type="reset"  value="重置"/>
 	</form>
 </div>
 </body>
