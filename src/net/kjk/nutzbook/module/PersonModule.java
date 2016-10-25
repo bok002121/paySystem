@@ -62,4 +62,13 @@ public class PersonModule extends BaseModule
 		
 		return re.setv("ok", true);
 	}
+	
+	@At
+	@GET
+	@Ok("jsp:jsp.person.manage")
+	public void manage(HttpServletRequest req)
+	{
+		
+	}
+	
 }
