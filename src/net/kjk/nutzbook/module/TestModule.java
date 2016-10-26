@@ -16,6 +16,7 @@ import net.kjk.nutzbook.bean.Role;
 import net.kjk.nutzbook.bean.User;
 import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
+import net.kjk.nutzbook.toolkit.PageToolKit;
 
 import org.nutz.dao.Cnd;
 import org.nutz.dao.QueryResult;
@@ -24,6 +25,7 @@ import org.nutz.dao.entity.Record;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Sql;
 import org.nutz.dao.sql.SqlCallback;
+import org.nutz.dao.util.Daos;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
@@ -287,13 +289,53 @@ public class TestModule extends BaseModule
 	@At
 	public void getAllPerson()
 	{
-		Sql sql = Sqls.queryEntity("SELECT * FROM t_user,t_user_info where t_user.user_id = t_user_info.user_id");
+		Sql sql = dao.sqls().create("testPerson.data");
+		//Sql sql = Sqls.queryEntity("SELECT * FROM t_user,t_user_info where t_user.user_id = t_user_info.user_id");
+		//Pager pager = dao.createPager(1, PageToolKit.getSize());
 		Pager pager = dao.createPager(1, 1);
 
 		pager.setRecordCount(2);// 记录数需手动设置
 		sql.setPager(pager);
 		sql.setCallback(Sqls.callback.records());
 		dao.execute(sql); 
-		System.out.println(sql.getList(Map.class));
+		System.out.println(Json.toJson(sql.getList(Map.class)));
 	}
+	
+	@At
+	public void getAllPerson2()
+	{
+		Sql sql = dao.sqls().create("testPerson.data");
+		sql.setPager(null);
+		sql.setCallback(Sqls.callback.records());
+		dao.execute(sql);
+		
+		Pager pager = dao.createPager(1, PageToolKit.getSize());
+		pager.setRecordCount(sql.getList(Map.class).size());// 记录数需手动设置
+		
+		sql.setPager(pager);
+		sql.setCallback(Sqls.callback.records());
+		dao.execute(sql); 
+		System.out.println(Json.toJson(sql.getList(Map.class)));
+	}
+	
+	@At
+	public void getAllPerson3()
+	{
+        Sql sql = dao.sqls().create("getPersonSum.data");
+		
+		sql.setCallback(new SqlCallback() {
+	        public Object invoke(Connection conn, ResultSet rs, Sql sql) throws SQLException {
+	        	int sums = 0;
+	            while (rs.next()){
+	    			sums = rs.getInt("sums");
+	    		}
+	            return sums;
+	        }
+	    });
+		dao.execute(sql);
+		int sum = sql.getInt();
+		System.out.print(sum);
+	}
+	
+	
 }
