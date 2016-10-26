@@ -337,5 +337,22 @@ public class TestModule extends BaseModule
 		System.out.print(sum);
 	}
 	
+	@At
+	public void getAllPerson4()
+	{
+        int sum = getRecordByData("getPersonSum.data");
+        System.out.print(sum);
+        
+        Sql sql = dao.sqls().create("testPerson.data");
+		
+		Pager pager = dao.createPager(1, PageToolKit.getSize());
+		pager.setRecordCount(sum);// 记录数需手动设置
+		
+		sql.setPager(pager);
+		sql.setCallback(Sqls.callback.records());
+		dao.execute(sql); 
+		System.out.println(Json.toJson(sql.getList(Map.class)));
+	}
+	
 	
 }
