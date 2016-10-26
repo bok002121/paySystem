@@ -2,6 +2,36 @@ $(document).ready(function () {
 	function myDebug(str){
 		console.log(str);
 	}
+// --------------  start person/manage ----------------------------------------------
+	// 上一页，下一页, 跳转
+	$("#pre_page_btn").click(function(){
+		myDebug("判断是否第一页，上一页啦");
+	});
+	
+	$("#next_page_btn").click(function(){
+		myDebug("判断是否最后一页，下一页啦");
+	});
+
+	$("#jump_page_btn").click(function(){
+		myDebug("判断是否当前页，和在范围内，跳转啦");
+	});
+	
+	
+	// 处理那3个链接点击事件
+	$("a#person_delete").click(function(){
+		myDebug("弹出个对话框 选择  delete");
+		return false;
+	});
+	
+	$("a#person_details").click(function(){
+		myDebug("获取参数，进去信息页面 ");
+		return false;
+	});
+	
+	$("a#person_change_status").click(function(){
+		myDebug("弹出对话框，启动or禁用 ");
+		return false;
+	});
 	
 	$(":radio.cate-radio").click(function(){
 		myDebug($(this).val());
@@ -9,6 +39,7 @@ $(document).ready(function () {
 		// 接着 post 获取项目
 		
 	});
+// --------------  end person/manage ----------------------------------------------
 	
 	// 楠岃瘉杈撳叆鍚堢悊鎬�
 	function check_AddPerson_form(){

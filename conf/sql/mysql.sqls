@@ -11,7 +11,7 @@ select count(user_id) sums
 from t_user_info
 
 /* getAllPerson.data */
-select job_no,name,dep_name,grade_name,join_time,user_status
+select t_user.user_id,job_no,name,dep_name,grade_name,join_time,user_status
 from t_user_info,t_grade,t_department,t_user
 where t_user_info.user_id = t_user.user_id
       and t_user_info.grade_id = t_grade.grade_id 

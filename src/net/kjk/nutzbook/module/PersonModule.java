@@ -1,6 +1,7 @@
 package net.kjk.nutzbook.module;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,11 +12,16 @@ import net.kjk.nutzbook.bean.Grade;
 import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.service.UserService;
+import net.kjk.nutzbook.toolkit.PageToolKit;
 
 import org.nutz.aop.interceptor.ioc.TransAop;
+import org.nutz.dao.Sqls;
+import org.nutz.dao.pager.Pager;
+import org.nutz.dao.sql.Sql;
 import org.nutz.ioc.aop.Aop;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.json.Json;
 import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.GET;
@@ -69,11 +75,26 @@ public class PersonModule extends BaseModule
 	public void manage(HttpServletRequest req)
 	{
 		// 获取职别
-		List<Grade> grades = dao.query(Grade.class, null);
-		req.setAttribute("grades", grades);
+		List<Category> cates = dao.query(Category.class, null);
+		req.setAttribute("cates", cates);
 		
 		// 获取人员并分页。
+		int sum = getRecordByData("getPersonSum.data");
+        System.out.print(sum);
+        
+        Sql sql = dao.sqls().create("getAllPerson.data");
 		
+		Pager pager = dao.createPager(1, PageToolKit.getSize());
+		pager.setRecordCount(sum);// 记录数需手动设置
+		
+		sql.setPager(pager);
+		sql.setCallback(Sqls.callback.records());
+		dao.execute(sql); 
+		System.out.println(Json.toJson(sql.getList(Map.class)));
+		req.setAttribute("persons", sql.getList(Map.class));
+		
+		req.setAttribute("curPage", 1);
+		req.setAttribute("sumPage", sum/10 + 1);
 	}
 	
 }

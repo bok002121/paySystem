@@ -351,7 +351,17 @@ public class TestModule extends BaseModule
 		sql.setPager(pager);
 		sql.setCallback(Sqls.callback.records());
 		dao.execute(sql); 
-		System.out.println(Json.toJson(sql.getList(Map.class)));
+		List<Map> rs = sql.getList(Map.class);
+		System.out.println(Json.toJson(rs));
+		
+		for(int i = 0; i < rs.size(); i++)
+		{
+			Map m = rs.get(i);
+			
+			System.out.println(m.size());
+			System.out.println(m.get("user_status"));
+			
+		}
 	}
 	
 	

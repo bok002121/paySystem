@@ -104,22 +104,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                t += td1 + m.get("grade_name") + td2;
 	                // 工龄
 	                t += td1 + m.get("join_time") + td2;
-	                // 详情 删除 启用状态
-	                t += td1 + "详情 删除 启用状态 " + m.get("user_id") + td2;
+	                // id
+	                t += td1 + "<input type=\"hidden\" id=\"" +  m.get("user_id") + "\" />";
+	                // 详情
+	                t += "<a href=\"#\" id=\"person_details\"><span>" + "详情</span></a>&nbsp;";
+	                // 删除
+	                t += "<a href=\"#\" id=\"person_delete\"><span>" + "删除</span></a>&nbsp;&nbsp;&nbsp;";
+	                // 启用状态
+	                if(((Integer)(m.get("user_status"))).intValue() == 1)
+	                {
+	                    t += "<img src=\"image/green.png\"/>&nbsp;";
+	                    t += "<a href=\"#\" id=\"person_change_status\"><span>" + "禁用</span></a>";
+	                }
+	                else
+	                {
+	                    t += "<img src=\"image/red.png\"/>&nbsp;";
+	                    t += "<a href=\"#\" id=\"person_change_status\"><span>" + "启动</span></a>";
+	                }
+	                // end td
+	                t += td2;
 	                
 	                // end 
 	                t += tr2;
 	                out.write(t);
 	            }
 	        %>
-	        <tr>
-	            <td>hello</td>
-	            <td>hello</td>
-	            <td>hello</td>
-	            <td>hello</td>
-	            <td>hello</td>
-	            <td>详情 删除 启用状态</td>
-	        </tr>
 	        <tr>
 	            <td>hello</td>
 	            <td>hello</td>
