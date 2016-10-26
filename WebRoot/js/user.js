@@ -3,6 +3,13 @@ $(document).ready(function () {
 		console.log(str);
 	}
 	
+	$(":radio.cate-radio").click(function(){
+		myDebug($(this).val());
+		
+		// 接着 post 获取项目
+		
+	});
+	
 	// 楠岃瘉杈撳叆鍚堢悊鎬�
 	function check_AddPerson_form(){
 		//myDebug('test');

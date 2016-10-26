@@ -68,6 +68,11 @@ public class PersonModule extends BaseModule
 	@Ok("jsp:jsp.person.manage")
 	public void manage(HttpServletRequest req)
 	{
+		// 获取职别
+		List<Grade> grades = dao.query(Grade.class, null);
+		req.setAttribute("grades", grades);
+		
+		// 获取人员并分页。
 		
 	}
 	

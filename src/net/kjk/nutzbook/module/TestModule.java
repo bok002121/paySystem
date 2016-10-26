@@ -6,18 +6,22 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.kjk.nutzbook.bean.MyMenu;
 import net.kjk.nutzbook.bean.Role;
+import net.kjk.nutzbook.bean.User;
 import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
 
 import org.nutz.dao.Cnd;
+import org.nutz.dao.QueryResult;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
+import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Sql;
 import org.nutz.dao.sql.SqlCallback;
 import org.nutz.ioc.loader.annotation.Inject;
@@ -278,5 +282,18 @@ public class TestModule extends BaseModule
 		else
 			System.out.println("null");
 
+	}
+	
+	@At
+	public void getAllPerson()
+	{
+		Sql sql = Sqls.queryEntity("SELECT * FROM t_user,t_user_info where t_user.user_id = t_user_info.user_id");
+		Pager pager = dao.createPager(1, 1);
+
+		pager.setRecordCount(2);// 记录数需手动设置
+		sql.setPager(pager);
+		sql.setCallback(Sqls.callback.records());
+		dao.execute(sql); 
+		System.out.println(sql.getList(Map.class));
 	}
 }

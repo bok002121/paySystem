@@ -5,3 +5,10 @@ where t_user_group.user_id=@id
 and t_group_menu.group_id = t_user_group.group_id 
 and t_group_menu.menu_id = t_menu.menu_id 
 order by menu_grade asc,menu_id asc;
+
+/* getAllPerson.data */
+select job_no,name,dep_name,grade_name,join_time,user_status
+from t_user_info,t_grade,t_department,t_user
+where t_user_info.user_id = t_user.user_id
+      and t_user_info.grade_id = t_grade.grade_id 
+      and t_user_info.dep_id = t_department.dep_id

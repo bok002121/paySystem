@@ -5,6 +5,7 @@ import java.util.Date;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Name;
+import org.nutz.dao.entity.annotation.One;
 import org.nutz.dao.entity.annotation.Table;
 
 @Table("t_user")
@@ -24,8 +25,19 @@ public class User
 	private Date createtime;
 	@Column
 	private Date updatetime;
+	@One(target=UserInfo.class, field="id", key="id")
+    protected UserInfo info;
 	
 	
+	
+	public UserInfo getInfo()
+	{
+		return info;
+	}
+	public void setInfo(UserInfo info)
+	{
+		this.info = info;
+	}
 	public int getId()
 	{
 		return id;
