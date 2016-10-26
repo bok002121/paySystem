@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,net.kjk.nutzbook.bean.Category" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -36,10 +36,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <tr>
 	            <td>
 	                 <input type="radio" name="cates" value="0" class="cate-radio"/>全部
-	                 <input type="radio" name="cates" value="1" class="cate-radio" checked="checked"/>在职
-	                 <input type="radio" name="cates" value="2" class="cate-radio" />退休
-	                 <input type="radio" name="cates" value="3" class="cate-radio" />遗嘱
-	                 <input type="radio" name="cates" value="4" class="cate-radio" />聘用制
+	                 <%
+	                     List<Category> c = (List<Category>)(request.getAttribute("cates"));
+	                     String str1_id = "<input type=\"radio\" name=\"cates\" class=\"cate-radio\" value=\"";
+	                     String str11_id = "<input type=\"radio\" name=\"cates\" class=\"cate-radio\" checked=\"checked\" value=\"";
+	                     String str2_name = "\"/>";
+	                     String t = "";
+	                     for( int i = 0; i < c.size(); i++)
+	                     {
+	                         if(c.get(i).getCateName().equals("在职"))
+	                         {
+	                             t = str11_id + c.get(i).getCateId() + str2_name + c.get(i).getCateName();
+	                         }
+	                         else
+	                         {
+	                             t = str1_id + c.get(i).getCateId() + str2_name + c.get(i).getCateName();
+	                         }
+	                         out.write(t);
+	                     }
+	                 %>
 	           </td>
 	        </tr>
 	        <tr>
@@ -69,6 +84,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            <th>工龄</th>
 	            <th></th>
 	        </tr>
+	        <%
+	            List<Map> rs = (List<Map>)(request.getAttribute("persons"));
+	            
+	            String tr1 = "<tr>",tr2 = "</tr>";
+	            String td1 = "<td>",td2 = "</td>";
+	            
+	            for(int i = 0; i < rs.size(); i++ )
+	            {
+	                t = tr1;
+	                Map m = rs.get(i);
+	                // 工号
+	                t += td1 + m.get("job_no") + td2;
+	                // 姓名
+	                t += td1 + m.get("name") + td2;
+	                // 科室
+	                t += td1 + m.get("dep_name") + td2;
+	                // 级别
+	                t += td1 + m.get("grade_name") + td2;
+	                // 工龄
+	                t += td1 + m.get("join_time") + td2;
+	                // 详情 删除 启用状态
+	                t += td1 + "详情 删除 启用状态 " + m.get("user_id") + td2;
+	                
+	                // end 
+	                t += tr2;
+	                out.write(t);
+	            }
+	        %>
 	        <tr>
 	            <td>hello</td>
 	            <td>hello</td>
@@ -96,8 +139,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <tr>
 	            <td colspan="6">
 	                <input type="button" id="pre_page_btn" value="上一页" />
-	                <b id="cur_page">1</b>&nbsp;/&nbsp;
-	                <b id="last_page">10</b>
+	                <b id="cur_page"><%= request.getAttribute("curPage") %></b>&nbsp;/&nbsp;
+	                <b id="last_page"><%= request.getAttribute("sumPage") %></b>
 	                <input type="button" id="next_page_btn" value="下一页" />&nbsp;&nbsp;
 	                <input type="text" id="jump_page" />&nbsp;
 	                <input type="button" id="jump_page_btn" value="跳转" />
