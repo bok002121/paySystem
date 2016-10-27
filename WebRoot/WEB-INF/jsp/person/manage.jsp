@@ -19,7 +19,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="shortcut icon" href="image/favicon.ico">
 <link rel="stylesheet" type="text/css" href="css/my.css">
 <link rel="stylesheet" type="text/css" href="css/form.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.custom.min.css">
 <script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.custom.js"></script>
 <script src="js/user.js"></script>
 
 </head>
@@ -105,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                // 工龄
 	                t += td1 + m.get("join_time") + td2;
 	                // id
-	                t += td1 + "<input type=\"hidden\" id=\"" +  m.get("user_id") + "\" />";
+	                t += td1 + "<input type=\"hidden\" id=\"" +  m.get("user_id") + "\"/>";
 	                // 详情
 	                t += "<a href=\"#\" id=\"person_details\"><span>" + "详情</span></a>&nbsp;";
 	                // 删除
@@ -157,6 +159,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        </tr>
 	    </table>
 	    </div>
+	</div>
+	<input type="hidden" id="person_select_assis" value="" />
+	<div id="person_delete_dialog" title="是否删除用户">
+	    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>此操作会删除此用户。您确定吗？</p>
+	</div>
+	<div id="person_change_dialog" title="是否更改用户状态">
+	    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>是否更改用户状态？</p>
 	</div>
 </body>
 </html>

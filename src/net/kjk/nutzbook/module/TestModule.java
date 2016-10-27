@@ -13,19 +13,16 @@ import javax.servlet.http.HttpSession;
 
 import net.kjk.nutzbook.bean.MyMenu;
 import net.kjk.nutzbook.bean.Role;
-import net.kjk.nutzbook.bean.User;
 import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.toolkit.PageToolKit;
 
 import org.nutz.dao.Cnd;
-import org.nutz.dao.QueryResult;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Sql;
 import org.nutz.dao.sql.SqlCallback;
-import org.nutz.dao.util.Daos;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;

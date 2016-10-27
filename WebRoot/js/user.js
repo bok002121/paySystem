@@ -16,10 +16,44 @@ $(document).ready(function () {
 		myDebug("判断是否当前页，和在范围内，跳转啦");
 	});
 	
+	// 绑定 删除对话框
+	
+	$( "#person_delete_dialog" ).dialog({
+	      resizable: false,
+	      autoOpen: false,
+	      width: 350,
+	      modal: true,
+	      buttons: {
+	        "确定": function() {
+	        	// 这里的话，就是去删除。采用同步吗? 应该用同步的感觉，不然你确定以后还没有删除。
+	        	if($("#person_select_assis").val() == ""){
+	        		// 说明出错了。
+	        		myDebug("id 没设置好");
+	        	}else{
+	        		// 异步操作
+	        	}
+	        	
+	          $( this ).dialog( "close" );
+	        },
+	        Cancel: function() {
+	          $( this ).dialog( "close" );
+	        }
+	      }
+	 });
+	
 	
 	// 处理那3个链接点击事件
 	$("a#person_delete").click(function(){
-		myDebug("弹出个对话框 选择  delete");
+		// 获取对应id
+		var h = $(this).prevAll("input[type=hidden]");
+		// 设置到person_select_assis 中
+		$("#person_select_assis").val(h.attr("id"));
+		
+		myDebug(h.attr("id") + "号:弹出个对话框 选择  delete");
+		
+		$( "#person_delete_dialog" ).dialog( "open" );
+		
+		$("#person_select_assis").val("");
 		return false;
 	});
 	
@@ -28,8 +62,39 @@ $(document).ready(function () {
 		return false;
 	});
 	
+	$( "#person_change_dialog" ).dialog({
+	      resizable: false,
+	      autoOpen: false,
+	      width: 350,
+	      modal: true,
+	      buttons: {
+	        "确定": function() {
+	        	// 这里的话，就是去删除。采用同步吗? 应该用同步的感觉，不然你确定以后还没有删除。
+	        	if($("#person_select_assis").val() == ""){
+	        		// 说明出错了。
+	        		myDebug("id 没设置好");
+	        	}else{
+	        		// 异步操作
+	        	}
+	        	
+	          $( this ).dialog( "close" );
+	        },
+	        Cancel: function() {
+	          $( this ).dialog( "close" );
+	        }
+	      }
+	 });
+	
 	$("a#person_change_status").click(function(){
-		myDebug("弹出对话框，启动or禁用 ");
+		var h = $(this).prevAll("input[type=hidden]");
+		// 设置到person_select_assis 中
+		$("#person_select_assis").val(h.attr("id"));
+		
+		myDebug(h.attr("id") + "号:弹出对话框，启动or禁用 ");
+		
+		$( "#person_change_dialog" ).dialog( "open" );
+		
+		$("#person_select_assis").val();
 		return false;
 	});
 	
