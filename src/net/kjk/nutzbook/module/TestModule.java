@@ -68,6 +68,22 @@ public class TestModule extends BaseModule
 	}
 	
 	@At
+	public void changeTest()
+	{
+	
+		Sql sql = dao.sqls().create("changeUserStatus.data");
+		sql.setParam("id", 1);
+		sql.setParam("status",0);
+		
+		//sql.setCallback(Sqls.callback.integer());
+		
+		dao.execute(sql);
+		
+		//System.out.println(Json.toJson(sql.getObject(Integer.class)));
+		System.out.println(Json.toJson(sql.getUpdateCount()));
+	}
+	
+	@At
 	public void daoManyTest()
 	{
 		Role role = dao.fetch(Role.class,1);

@@ -19,3 +19,10 @@ where t_user_info.user_id = t_user.user_id
       
  /* testPerson.data */
  SELECT * FROM t_user,t_user_info where t_user.user_id = t_user_info.user_id
+ 
+ 
+ /* 字段用 $ 值用 @ */
+ /* changeUserStatus.data */
+ update t_user
+set user_status = @status
+where user_id = @id;

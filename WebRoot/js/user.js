@@ -17,6 +17,19 @@ $(document).ready(function () {
 	});
 	
 	// 绑定 删除对话框
+	// ---------------------------------------person_delete --------------------------------
+	$("a#person_delete").click(function(){
+		// 获取对应id
+		var h = $(this).prevAll("input[type=hidden]");
+		// 设置到person_select_assis 中
+		$("#person_select_assis").val(h.attr("id"));
+		
+		myDebug(h.attr("id") + "号:弹出个对话框 选择  delete");
+		
+		$( "#person_delete_dialog" ).dialog( "open" );
+		
+		return false;
+	});
 	
 	$( "#person_delete_dialog" ).dialog({
 	      resizable: false,
@@ -40,25 +53,27 @@ $(document).ready(function () {
 	        }
 	      }
 	 });
+	// ---------------------------------------person_delete end--------------------------------
 	
-	
-	// 处理那3个链接点击事件
-	$("a#person_delete").click(function(){
-		// 获取对应id
-		var h = $(this).prevAll("input[type=hidden]");
-		// 设置到person_select_assis 中
-		$("#person_select_assis").val(h.attr("id"));
-		
-		myDebug(h.attr("id") + "号:弹出个对话框 选择  delete");
-		
-		$( "#person_delete_dialog" ).dialog( "open" );
-		
-		$("#person_select_assis").val("");
-		return false;
-	});
+	// ---------------------------------------person_details --------------------------------
 	
 	$("a#person_details").click(function(){
 		myDebug("获取参数，进去信息页面 ");
+		return false;
+	});
+	// ---------------------------------------person_details end --------------------------------
+	
+	// ---------------------------------------person_change --------------------------------
+	$("a#person_change_status").click(function(){
+		var h = $(this).prevAll("input[type=hidden]");
+		// 设置到person_select_assis 中
+		$("#person_select_assis").val(h.attr("id"));
+		$("#person_status_assis").val(h.val());
+		
+		myDebug(h.attr("id") + "号:弹出对话框，启动or禁用 ");
+		
+		$( "#person_change_dialog" ).dialog( "open" );
+		
 		return false;
 	});
 	
@@ -75,30 +90,37 @@ $(document).ready(function () {
 	        		myDebug("id 没设置好");
 	        	}else{
 	        		// 异步操作
+	        		var id = $("#person_select_assis").val();
+	        		var sel = "tr#"+id;
+	        		var status = $(sel).find("a#person_change_status span").first();
+	        		var text = status.html();
+	        		
+	        		$.post("person/changeUserStatus",
+	                        {id:id,
+	                         status: text
+	                        },
+	                        function(data) {
+	                            if (data.ok == true) {
+	                            	status.html(data.status);
+	                                $(sel).find("img").first().attr("src",data.img);
+	                            } else {
+	                            	alert("失败，系统异常");
+	                            }
+	                        });
+	        		$( this ).dialog( "close" );
 	        	}
-	        	
-	          $( this ).dialog( "close" );
 	        },
 	        Cancel: function() {
 	          $( this ).dialog( "close" );
 	        }
 	      }
 	 });
-	
-	$("a#person_change_status").click(function(){
-		var h = $(this).prevAll("input[type=hidden]");
-		// 设置到person_select_assis 中
-		$("#person_select_assis").val(h.attr("id"));
-		
-		myDebug(h.attr("id") + "号:弹出对话框，启动or禁用 ");
-		
-		$( "#person_change_dialog" ).dialog( "open" );
-		
-		$("#person_select_assis").val();
-		return false;
-	});
+	// ---------------------------------------person_change end --------------------------------
 	
 	$(":radio.cate-radio").click(function(){
+//		var s = "tr#"+2;
+//		var text = $(s).find("a#person_change_status span").first().html();
+//		alert(text);
 		myDebug($(this).val());
 		
 		// 接着 post 获取项目

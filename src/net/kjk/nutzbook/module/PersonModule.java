@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import net.kjk.nutzbook.bean.Category;
 import net.kjk.nutzbook.bean.Department;
 import net.kjk.nutzbook.bean.Grade;
+import net.kjk.nutzbook.bean.User;
 import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.service.UserService;
@@ -95,6 +96,45 @@ public class PersonModule extends BaseModule
 		
 		req.setAttribute("curPage", 1);
 		req.setAttribute("sumPage", sum/10 + 1);
+	}
+	
+	@At
+	@POST
+	public Object changeUserStatus(@Param("id") int id,
+			                       @Param("status") String status)
+	{
+		NutMap re = new NutMap();
+		int s = 0;
+		String img = "";
+		if(status.equals("启动"))
+		{
+			s = 1;
+			status = "禁用";
+			img = "image/green.png";
+		}
+		else
+		{
+			s = 0;
+			status = "启用";
+			img = "image/red.png";
+		}
+		
+		Sql sql = dao.sqls().create("changeUserStatus.data");
+		sql.setParam("id", id);
+		sql.setParam("status",s);
+		dao.execute(sql);
+		
+		if(sql.getUpdateCount() == -1)
+		{
+			re.setv("ok", false);
+		}
+		else
+		{
+			re.setv("ok", true);
+			re.setv("status",status);
+			re.setv("img", img);
+		}
+		return re;
 	}
 	
 }

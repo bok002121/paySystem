@@ -89,13 +89,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <%
 	            List<Map> rs = (List<Map>)(request.getAttribute("persons"));
 	            
-	            String tr1 = "<tr>",tr2 = "</tr>";
+	            String tr1 = "<tr id=\"",tr1_2 = "\">",tr2 = "</tr>";
 	            String td1 = "<td>",td2 = "</td>";
 	            
 	            for(int i = 0; i < rs.size(); i++ )
 	            {
-	                t = tr1;
+	                
 	                Map m = rs.get(i);
+
+                    // id 
+                    t = tr1 + m.get("user_id") + tr1_2;
 	                // 工号
 	                t += td1 + m.get("job_no") + td2;
 	                // 姓名
@@ -131,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                out.write(t);
 	            }
 	        %>
-	        <tr>
+	        <tr id="a_1">
 	            <td>hello</td>
 	            <td>hello</td>
 	            <td>hello</td>
@@ -139,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            <td>hello</td>
 	            <td>详情 删除 启用状态</td>
 	        </tr>
-	        <tr>
+	        <tr id="23">
 	            <td>hello</td>
 	            <td>hello</td>
 	            <td>hello</td>
