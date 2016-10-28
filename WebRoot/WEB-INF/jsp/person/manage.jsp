@@ -70,7 +70,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                 <option value ="6">办事员</option>
 		             </select>&nbsp;
 		             <input type="text" name="shai_xuan_text" id="shai_xuan_text" />&nbsp;
-		             <input type="button" name="shai_xuan_btn" id="shai_xuan_btn" value="检索"/>
+		             <input type="button" name="shai_xuan_btn" id="shai_xuan_btn" value="检索"/>&nbsp;&nbsp;
+		             <span id="workTip" style="color:red;"></span>
 		        </td>
 	        </tr>
 	    </table>
@@ -154,7 +155,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            <td colspan="6">
 	                <input type="button" id="pre_page_btn" value="上一页" />
 	                <b id="cur_page"><%= request.getAttribute("curPage") %></b>&nbsp;/&nbsp;
-	                <b id="last_page"><%= request.getAttribute("sumPage") %></b>
+	                <b id="last_page"><%= request.getAttribute("sumPage") %></b>&nbsp;
+	                <b id="sum_record">共<%= request.getAttribute("sum_record")%>条</b>&nbsp;
 	                <input type="button" id="next_page_btn" value="下一页" />&nbsp;&nbsp;
 	                <input type="text" id="jump_page" />&nbsp;
 	                <input type="button" id="jump_page_btn" value="跳转" />

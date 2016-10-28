@@ -72,6 +72,14 @@ public class PersonModule extends BaseModule
 	
 	@At
 	@GET
+	@Ok("jsp:jsp.person.inout")
+	public void inout()
+	{
+		
+	}
+	
+	@At
+	@GET
 	@Ok("jsp:jsp.person.manage")
 	public void manage(HttpServletRequest req)
 	{
@@ -96,6 +104,7 @@ public class PersonModule extends BaseModule
 		
 		req.setAttribute("curPage", 1);
 		req.setAttribute("sumPage", sum/10 + 1);
+		req.setAttribute("sum_record", sum);
 	}
 	
 	@At
@@ -115,7 +124,7 @@ public class PersonModule extends BaseModule
 		else
 		{
 			s = 0;
-			status = "启用";
+			status = "启动";
 			img = "image/red.png";
 		}
 		
@@ -133,6 +142,28 @@ public class PersonModule extends BaseModule
 			re.setv("ok", true);
 			re.setv("status",status);
 			re.setv("img", img);
+		}
+		return re;
+	}
+	
+	@At
+	@POST
+	public Object deletePerson(@Param("id") int id)
+	{
+		NutMap re = new NutMap();
+		
+		Sql sql = dao.sqls().create("deletePerson.data");
+		sql.setParam("id", id);
+		dao.execute(sql);
+		
+		if(sql.getUpdateCount() == -1)
+		{
+			re.setv("ok", false);
+		}
+		else
+		{
+			re.setv("ok", true);
+
 		}
 		return re;
 	}

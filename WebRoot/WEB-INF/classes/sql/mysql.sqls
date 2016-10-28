@@ -11,11 +11,13 @@ select count(user_id) sums
 from t_user_info
 
 /* getAllPerson.data */
-select t_user.user_id,job_no,name,dep_name,grade_name,join_time,user_status
+select t_user.user_id,job_no,name,dep_name,grade_name,join_time,user_status,t_user_info.dep_id
 from t_user_info,t_grade,t_department,t_user
 where t_user_info.user_id = t_user.user_id
+      and t_user_info.cate_id = 1
       and t_user_info.grade_id = t_grade.grade_id 
       and t_user_info.dep_id = t_department.dep_id
+      order by dep_id asc
       
  /* testPerson.data */
  SELECT * FROM t_user,t_user_info where t_user.user_id = t_user_info.user_id
@@ -25,4 +27,8 @@ where t_user_info.user_id = t_user.user_id
  /* changeUserStatus.data */
  update t_user
 set user_status = @status
+where user_id = @id;
+
+/* deletePerson.data */
+delete from t_user 
 where user_id = @id;

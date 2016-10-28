@@ -1,9 +1,25 @@
 $(document).ready(function () {
+	$("#workTip").hide();
+	
+	function showTip(str)
+	{
+		$("#workTip").text(str);
+    	$("#workTip").fadeIn("slow",function(){
+    		$("#workTip").fadeOut("slow");
+    	});
+	}
+	
 	function myDebug(str){
 		console.log(str);
 	}
 // --------------  start person/manage ----------------------------------------------
-	// 上一页，下一页, 跳转
+	
+	
+// ---------------  start pre next jum btn -------------------------------------------------
+	// 应该可以通用一个函数，发送要查找第几页就是了
+	
+	
+	// 上一页，下一页, 跳转,计算需要查找的第几页数
 	$("#pre_page_btn").click(function(){
 		myDebug("判断是否第一页，上一页啦");
 	});
@@ -15,6 +31,7 @@ $(document).ready(function () {
 	$("#jump_page_btn").click(function(){
 		myDebug("判断是否当前页，和在范围内，跳转啦");
 	});
+	// ---------------  start pre next jum btn end -------------------------------------------------
 	
 	// 绑定 删除对话框
 	// ---------------------------------------person_delete --------------------------------
@@ -39,14 +56,23 @@ $(document).ready(function () {
 	      buttons: {
 	        "确定": function() {
 	        	// 这里的话，就是去删除。采用同步吗? 应该用同步的感觉，不然你确定以后还没有删除。
-	        	if($("#person_select_assis").val() == ""){
-	        		// 说明出错了。
-	        		myDebug("id 没设置好");
-	        	}else{
-	        		// 异步操作
-	        	}
+	        	var id = $("#person_select_assis").val();
+	        	var sel = "tr#"+id;
 	        	
-	          $( this ).dialog( "close" );
+	        	$.post("person/deletePerson",
+                        {id:id,
+                        },
+                        function(data) {
+                            if (data.ok == true) {
+                            	// 删除成功,将那一行删掉
+                            	$(sel).remove();
+                            	
+                            	showTip("删除成功");
+                              } else {
+                            	showTip("失败，系统异常");
+                            }
+                        });
+        		$( this ).dialog( "close" );
 	        },
 	        Cancel: function() {
 	          $( this ).dialog( "close" );
@@ -84,31 +110,26 @@ $(document).ready(function () {
 	      modal: true,
 	      buttons: {
 	        "确定": function() {
-	        	// 这里的话，就是去删除。采用同步吗? 应该用同步的感觉，不然你确定以后还没有删除。
-	        	if($("#person_select_assis").val() == ""){
-	        		// 说明出错了。
-	        		myDebug("id 没设置好");
-	        	}else{
-	        		// 异步操作
-	        		var id = $("#person_select_assis").val();
-	        		var sel = "tr#"+id;
-	        		var status = $(sel).find("a#person_change_status span").first();
-	        		var text = status.html();
-	        		
-	        		$.post("person/changeUserStatus",
-	                        {id:id,
-	                         status: text
-	                        },
-	                        function(data) {
-	                            if (data.ok == true) {
-	                            	status.html(data.status);
-	                                $(sel).find("img").first().attr("src",data.img);
-	                            } else {
-	                            	alert("失败，系统异常");
-	                            }
-	                        });
-	        		$( this ).dialog( "close" );
-	        	}
+	        	// 异步操作
+        		var id = $("#person_select_assis").val();
+        		var sel = "tr#"+id;
+        		var status = $(sel).find("a#person_change_status span").first();
+        		var text = status.html();
+        		
+        		$.post("person/changeUserStatus",
+                        {id:id,
+                         status: text
+                        },
+                        function(data) {
+                            if (data.ok == true) {
+                            	status.html(data.status);
+                                $(sel).find("img").first().attr("src",data.img);
+                                showTip("更改成功");
+                            } else {
+                            	showTip("失败，系统异常");
+                            }
+                        });
+        		$( this ).dialog( "close" );
 	        },
 	        Cancel: function() {
 	          $( this ).dialog( "close" );
@@ -121,6 +142,7 @@ $(document).ready(function () {
 //		var s = "tr#"+2;
 //		var text = $(s).find("a#person_change_status span").first().html();
 //		alert(text);
+		showTip("hello world");
 		myDebug($(this).val());
 		
 		// 接着 post 获取项目
