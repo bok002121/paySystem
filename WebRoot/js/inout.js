@@ -6,10 +6,9 @@ $(document).ready(function () {
 	
 	$("#person_in_btn").click(function(){
 		var fileName = $("#input_file").val();
-		var reg = /\.xl(s[xmb]|t[xm]|am)$/;
-		var reg2 = /\.xls$/;
+		var reg = /\.xl(s|s[xmb]|t[xm]|am)$/;
 		myDebug(fileName);
-		if(reg.test(reg)){
+		if(reg.test(fileName)){
 			myDebug("excel file");
 		}else{
 			myDebug("not excel file");
