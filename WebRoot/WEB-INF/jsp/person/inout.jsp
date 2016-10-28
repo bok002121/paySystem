@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.custom.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-ui.custom.js"></script>
-<script src="js/user.js"></script>
+<script src="js/inout.js"></script>
 
 </head>
 
@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <table class="support">
 	        <tr>
 	            <td>
-	                 <input type="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+	                 <input type="file" id="input_file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
 	                 <input type="button" id="person_in_btn" value="导入" />
 	           </td>
 	        </tr>
