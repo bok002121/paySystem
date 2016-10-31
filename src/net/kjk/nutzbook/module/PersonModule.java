@@ -1,5 +1,7 @@
 package net.kjk.nutzbook.module;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,13 +11,13 @@ import javax.servlet.http.HttpSession;
 import net.kjk.nutzbook.bean.Category;
 import net.kjk.nutzbook.bean.Department;
 import net.kjk.nutzbook.bean.Grade;
-import net.kjk.nutzbook.bean.User;
 import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.service.UserService;
 import net.kjk.nutzbook.toolkit.PageToolKit;
 
 import org.nutz.aop.interceptor.ioc.TransAop;
+import org.nutz.dao.DaoException;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Sql;
@@ -24,11 +26,16 @@ import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
 import org.nutz.lang.util.NutMap;
+import org.nutz.mvc.annotation.AdaptBy;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 import org.nutz.mvc.annotation.Param;
+import org.nutz.mvc.impl.AdaptorErrorContext;
+import org.nutz.mvc.upload.FieldMeta;
+import org.nutz.mvc.upload.TempFile;
+import org.nutz.mvc.upload.UploadAdaptor;
 
 @At("/person")
 @IocBean
@@ -170,9 +177,37 @@ public class PersonModule extends BaseModule
 	
 	@At
 	@POST
-	public Object inPerson()
+	@AdaptBy(type=UploadAdaptor.class, args={"${app.root}/WEB-INF/tmp", "8192", "utf-8", "20000"})
+	public Object inPerson(@Param("Filedata")TempFile tf,
+    		HttpServletRequest req,  
+            AdaptorErrorContext err)
 	{
 		NutMap re = new NutMap();
+		
+		String msg = null;
+        if (err != null && err.getAdaptorErr() != null) {
+            msg = "size not good";
+        } else if (tf == null) {
+            msg = "empty";
+        } else {
+            try {
+            	msg = "good";
+            	
+            	File f = tf.getFile();                       
+            	// 这个是保存的临时文件   
+            	FieldMeta meta = tf.getMeta();               
+            	// 这个原本的文件信息   
+            	String oldName = meta.getFileLocalName();
+            	
+            	System.out.print(oldName);
+            	
+            } catch(DaoException e) {
+                msg = "system error";
+            } catch (Throwable e) {
+            	msg = "system error";
+            }
+        }
+        System.out.print(msg);
 		
 		return re;
 	}

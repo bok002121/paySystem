@@ -28,13 +28,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $("#uploadify").uploadify({  
                     'uploader'       : 'inPerson',  
                     'swf'            : 'swf/uploadify.swf',  
-                    'cancelImg'      : 'image/uploadify-cancel.png',  
+                    'buttonText'     : '选择文件',
                     'queueID'        : 'fileQueue',  
                     'auto'           : false,  
-                    'multi'          : true,  
-                    'onAllComplete'  :function(event,data) {  
-                        $('#result').html(data.filesUploaded +'个图片上传成功');  
-                    }  
                 }); 
                 
                 $("#start").click(function(){
@@ -43,7 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 }); 
                 
                 $("#stop").click(function(){
-                    $('#uploadify').uploadifyClearQueue();
+                    $('#uploadify').uploadify('cancel','*');
                 }); 
             });  
         </script>  
@@ -57,12 +53,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td align="left">  
                     <input type="button" id="start" value="文件上传" />
                     <input type="button" id="stop" value="取消上传" />
-                    <a href="javascript:$('#uploadify').upload()">上传</a>| 
-    <a href="javascript:$('#uploadify').uploadifyClearQueue()">取消上传</a>
-                <span id="result" style="font-size: 13px;color: red"></span>  
                 </td>  
             </tr>  
         </table>  
-        <div id="fileQueue" style="width: 400px;height: 300px; border: 2px solid green;"></div>  
+        <div id="fileQueue" class="uploadify-queue"></div>  
     </body>  
 </html>  

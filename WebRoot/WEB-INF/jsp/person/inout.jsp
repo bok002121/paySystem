@@ -20,10 +20,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/my.css">
 <link rel="stylesheet" type="text/css" href="css/form.css">
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.custom.min.css">
+<link rel="stylesheet" type="text/css" href="css/uploadify.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-ui.custom.js"></script>
 <script src="js/inout.js"></script>
-
+<script type="text/javascript" src="js/jquery.uploadify.min.js"></script> 
 </head>
 
 <body>
@@ -37,11 +38,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <table class="support">
 	        <tr>
 	            <td>
-	                 <form action="#" id="in_form" method="post" enctype="multipart/form-data">
-	                     <input type="file" name="input_file" id="input_file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-	                     <input type="submit" id="person_in_btn" value="导入" />
-	                     <input type="submit" id="person_update_btn" value="更新导入" />
-	                 </form>
+	                <input type="button" id="uploadify">
+	                <input type="button" id="person_in_btn" value="导入" />
+	                <input type="button" id="person_update_btn" value="更新导入" />
 	           </td>
 	        </tr>
 	        <tr>
@@ -53,6 +52,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	            <td>
 		             <span id="workTip" style="color:red;"></span>
 		        </td>
+	        </tr>
+	        <tr>
+	            <td>
+	                <div id="fileQueue"></div>
+	            </td>
 	        </tr>
 	    </table>
 	    </div>
