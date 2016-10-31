@@ -1,5 +1,9 @@
 package net.kjk.nutzbook.module;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +22,7 @@ import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.toolkit.PageToolKit;
 
 import org.nutz.dao.Cnd;
+import org.nutz.dao.DaoException;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.entity.Record;
 import org.nutz.dao.pager.Pager;
@@ -27,12 +32,17 @@ import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
 import org.nutz.lang.util.NutMap;
+import org.nutz.mvc.annotation.AdaptBy;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 import org.nutz.mvc.annotation.Param;
+import org.nutz.mvc.impl.AdaptorErrorContext;
+import org.nutz.mvc.upload.FieldMeta;
+import org.nutz.mvc.upload.TempFile;
+import org.nutz.mvc.upload.UploadAdaptor;
 
 @IocBean
 @Filters()
@@ -65,6 +75,46 @@ public class TestModule extends BaseModule
 //				Cnd.where("id", "=", 1));
 //		
 //		System.out.println("???" + user.getName());
+	}
+	
+	@At
+	@Ok("jsp:jsp.test.f")
+	public void f(){
+		
+	}
+	
+	@At
+	@AdaptBy(type=UploadAdaptor.class, args={"${app.root}/WEB-INF/tmp", "8192", "utf-8", "20000", "102400"})
+    @POST
+    public void inPerson(@Param("Filedata")TempFile tf,
+    		HttpServletRequest req,  
+            AdaptorErrorContext err) throws IOException
+	{
+		String msg = null;
+        if (err != null && err.getAdaptorErr() != null) {
+            msg = "size not good";
+        } else if (tf == null) {
+            msg = "empty";
+        } else {
+            try {
+            	msg = "good";
+            	
+            	File f = tf.getFile();                       
+            	// 这个是保存的临时文件   
+            	FieldMeta meta = tf.getMeta();               
+            	// 这个原本的文件信息   
+            	String oldName = meta.getFileLocalName();
+            	
+            	System.out.print(oldName);
+            	
+            } catch(DaoException e) {
+                msg = "system error";
+            } catch (Throwable e) {
+            	msg = "system error";
+            }
+        }
+        System.out.print(msg);
+        
 	}
 	
 	@At

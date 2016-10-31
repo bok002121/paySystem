@@ -37,8 +37,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <table class="support">
 	        <tr>
 	            <td>
-	                 <input type="file" id="input_file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-	                 <input type="button" id="person_in_btn" value="导入" />
+	                 <form action="#" id="in_form" method="post" enctype="multipart/form-data">
+	                     <input type="file" name="input_file" id="input_file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+	                     <input type="submit" id="person_in_btn" value="导入" />
+	                     <input type="submit" id="person_update_btn" value="更新导入" />
+	                 </form>
 	           </td>
 	        </tr>
 	        <tr>

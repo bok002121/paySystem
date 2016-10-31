@@ -168,4 +168,13 @@ public class PersonModule extends BaseModule
 		return re;
 	}
 	
+	@At
+	@POST
+	public Object inPerson()
+	{
+		NutMap re = new NutMap();
+		
+		return re;
+	}
+	
 }
