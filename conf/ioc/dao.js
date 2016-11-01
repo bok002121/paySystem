@@ -1,4 +1,10 @@
 var ioc = {
+		excelConf :{
+			type : "org.nutz.ioc.impl.PropertiesProxy",
+            fields : {
+                paths : ["custom/excel.properties"]
+            }
+		},
         conf : {
             type : "org.nutz.ioc.impl.PropertiesProxy",
             fields : {

@@ -4,6 +4,7 @@ import org.nutz.dao.Dao;
 
 import org.nutz.dao.util.Daos;
 import org.nutz.ioc.Ioc;
+import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.mvc.NutConfig;
 import org.nutz.mvc.Setup;
 
@@ -14,6 +15,8 @@ public class MainSetup implements Setup
 		Ioc ioc = conf.getIoc();
 		Dao dao = ioc.get(Dao.class);
 		Daos.createTablesInPackage(dao, "net.kjk.nutzbook", false);
+		
+		//PropertiesProxy excelConf = ioc.get(PropertiesProxy.class, "excelConf");
 		
 		System.out.println(dao.sqls().count());
 //		if(dao.count(User.class) == 0)

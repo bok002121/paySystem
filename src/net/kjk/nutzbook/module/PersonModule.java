@@ -1,7 +1,6 @@
 package net.kjk.nutzbook.module;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -194,12 +193,9 @@ public class PersonModule extends BaseModule
             	msg = "good";
             	
             	File f = tf.getFile();                       
-            	// 这个是保存的临时文件   
-            	FieldMeta meta = tf.getMeta();               
-            	// 这个原本的文件信息   
-            	String oldName = meta.getFileLocalName();
+            	String path = f.getPath();
             	
-            	System.out.print(oldName);
+            	// 判断标题是否正确
             	
             } catch(DaoException e) {
                 msg = "system error";
@@ -211,5 +207,6 @@ public class PersonModule extends BaseModule
 		
 		return re;
 	}
+	
 	
 }

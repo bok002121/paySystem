@@ -2,19 +2,15 @@ package net.kjk.nutzbook.module;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import net.kjk.nutzbook.toolkit.ReadExcel;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.nutz.dao.DaoException;
+import org.nutz.ioc.impl.PropertiesProxy;
+import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
 import org.nutz.lang.util.NutMap;
@@ -33,6 +29,7 @@ import org.nutz.mvc.upload.UploadAdaptor;
 @At("/test2")
 public class TestExcelModule extends BaseModule
 {
+	@Inject protected PropertiesProxy excelConf;
 	@At
 	@AdaptBy(type=UploadAdaptor.class, args={"${app.root}/WEB-INF/tmp", "8192", "utf-8", "20000", "102400"})
     @POST
@@ -77,6 +74,7 @@ public class TestExcelModule extends BaseModule
             	msg = "system error";
             }
         }
+        System.out.println(Json.toJson(excelConf.toProperties()));
         System.out.println(msg);
         return re.setv("msg",msg);
 	}
