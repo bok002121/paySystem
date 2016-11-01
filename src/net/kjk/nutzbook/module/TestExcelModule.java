@@ -66,6 +66,9 @@ public class TestExcelModule extends BaseModule
             	Map<Integer, String> content = ReadExcel.readExcelContent(path);
             	System.out.println(Json.toJson(content));
             	
+            	String[] importTitle = ReadExcel.impotrHead(path, excelConf.toMap());
+            	System.out.println("import: " + Json.toJson(importTitle));
+            	
             	msg = Json.toJson(titles);
             	
             } catch(DaoException e) {

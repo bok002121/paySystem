@@ -16,8 +16,6 @@ public class MainSetup implements Setup
 		Dao dao = ioc.get(Dao.class);
 		Daos.createTablesInPackage(dao, "net.kjk.nutzbook", false);
 		
-		//PropertiesProxy excelConf = ioc.get(PropertiesProxy.class, "excelConf");
-		
 		System.out.println(dao.sqls().count());
 //		if(dao.count(User.class) == 0)
 //		{

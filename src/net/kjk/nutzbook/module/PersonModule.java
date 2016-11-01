@@ -14,6 +14,7 @@ import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.service.UserService;
 import net.kjk.nutzbook.toolkit.PageToolKit;
+import net.kjk.nutzbook.toolkit.ReadExcel;
 
 import org.nutz.aop.interceptor.ioc.TransAop;
 import org.nutz.dao.DaoException;
@@ -21,6 +22,7 @@ import org.nutz.dao.Sqls;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Sql;
 import org.nutz.ioc.aop.Aop;
+import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
@@ -42,6 +44,7 @@ public class PersonModule extends BaseModule
 {
 	@Inject protected UserService userService;
 	@Inject protected UserInfoService userInfoService;
+	@Inject protected PropertiesProxy excelConf;
 	@At
 	@GET
 	@Ok("jsp:jsp.person.add")
@@ -189,24 +192,36 @@ public class PersonModule extends BaseModule
         } else if (tf == null) {
             msg = "empty";
         } else {
-            try {
-            	msg = "good";
-            	
+            try {     	
             	File f = tf.getFile();                       
             	String path = f.getPath();
             	
             	// 判断标题是否正确
-            	
+            	String[] titles = ReadExcel.impotrHead(path, excelConf.toMap());
+            	if(null == titles)
+            	{
+            		// 说明出错了。
+            		msg = "标题存在不对";
+            		re.setv("ok", false);
+            	}
+            	else
+            	{
+            		// 插入,因为这里涉及多条插入，需要用事务
+            		
+            	}
             } catch(DaoException e) {
                 msg = "system error";
+                re.setv("ok", false);
             } catch (Throwable e) {
             	msg = "system error";
+            	re.setv("ok", false);
             }
         }
         System.out.print(msg);
 		
-		return re;
+		return re.setv("ok", true).setv("msg","标题存在不对");
 	}
+	
 	
 	
 }
