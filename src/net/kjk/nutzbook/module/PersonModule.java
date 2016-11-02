@@ -45,6 +45,7 @@ public class PersonModule extends BaseModule
 	@Inject protected UserService userService;
 	@Inject protected UserInfoService userInfoService;
 	@Inject protected PropertiesProxy excelConf;
+	
 	@At
 	@GET
 	@Ok("jsp:jsp.person.add")
@@ -197,7 +198,7 @@ public class PersonModule extends BaseModule
             	String path = f.getPath();
             	
             	// 判断标题是否正确
-            	String[] titles = ReadExcel.impotrHead(path, excelConf.toMap());
+            	String[] titles = ReadExcel.readExcelTitle(path);
             	if(null == titles)
             	{
             		// 说明出错了。

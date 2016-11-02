@@ -99,6 +99,47 @@ public class ReadExcel
 		return null;
 
 	}
+	
+	/**
+	 * 读取Excel数据内容
+	 * 
+	 * @param InputStream
+	 * @return Map 包含单元格数据内容的Map对象
+	 */
+	public static List<Map> readExcelContentToListMap(String path,Map<String,String>title)
+	{
+		List<Map> content = new ArrayList<Map>();
+		String[] ss = readExcelTitle(path);
+		
+		try
+		{
+			InputStream is = new FileInputStream(path);
+			fs = new POIFSFileSystem(is);
+			wb = new HSSFWorkbook(fs);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		sheet = wb.getSheetAt(0);
+		// 得到总行数
+		int rowNum = sheet.getLastRowNum();
+		row = sheet.getRow(0);
+		int colNum = row.getPhysicalNumberOfCells();
+		// 正文内容应该从第二行开始,第一行为表头的标题
+		for (int i = 1; i <= rowNum; i++)
+		{
+			row = sheet.getRow(i);
+			Map m = new HashMap();
+			int j = 0;
+			while (j < colNum)
+			{
+				m.put(ss[j], getCellFormatValue(row.getCell((short) j)).trim());
+				j++;
+			}
+			content.add(m);
+		}
+		return content;
+	}
 
 	/**
 	 * 读取Excel数据内容
@@ -143,7 +184,7 @@ public class ReadExcel
 		}
 		return content;
 	}
-
+	
 	/**
 	 * 根据HSSFCell类型设置数据
 	 * 

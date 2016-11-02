@@ -32,3 +32,26 @@ where user_id = @id;
 /* deletePerson.data */
 delete from t_user 
 where user_id = @id;
+
+/* selectAllDep.data */
+select *
+from t_department;
+
+/* selectAllGrade.data */
+select *
+from t_grade;
+
+/* selectAllCate.data */
+select *
+from t_category;
+
+
+
+
+
+
+
+
+
+
+

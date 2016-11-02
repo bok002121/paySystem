@@ -36,5 +36,12 @@ public class Grade
 		this.gradeName = gradeName;
 	}
 	
-	
+	public int findIdByName(String name)
+	{
+		if( this.gradeName.equals(name))
+		{
+			return this.gradeId;
+		}
+		return 0;
+	}
 }
