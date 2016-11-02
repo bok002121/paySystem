@@ -2,10 +2,12 @@ package net.kjk.nutzbook.module;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.toolkit.ReadExcel;
 
 import org.nutz.dao.DaoException;
@@ -52,13 +54,13 @@ public class TestExcelModule extends BaseModule
             	// 这个原本的文件信息   
             	String oldName = meta.getFileLocalName();
             	
-            	System.out.println(oldName);
+            	//System.out.println(oldName);
             	
             	String allName = meta.getFileLocalPath();
-            	System.out.println(allName);
+            	//System.out.println(allName);
             	
             	String path = f.getPath();
-            	System.out.println(path);
+            	//System.out.println(path);
             	
             	String[] titles = ReadExcel.readExcelTitle(path);
             	System.out.println(Json.toJson(titles));
@@ -66,8 +68,13 @@ public class TestExcelModule extends BaseModule
             	Map<Integer, String> content = ReadExcel.readExcelContent(path);
             	System.out.println(Json.toJson(content));
             	
-            	String[] importTitle = ReadExcel.impotrHead(path, excelConf.toMap());
-            	System.out.println("import: " + Json.toJson(importTitle));
+            	//String[] importTitle = ReadExcel.impotrHead(path, excelConf.toMap());
+            	//System.out.println("import: " + Json.toJson(importTitle));
+            	
+//            	List<Map> content2 = ReadExcel.readExcelContentToListMap(path,excelConf.toMap());
+//            	System.out.println(Json.toJson(content2));
+            	//String[] fieldNames = {"name","sex","birthday","idCard","joinTime"};
+            	//List<UserInfo> infos = ReadExcel.readExcels(UserInfo.class, fieldNames, content);
             	
             	msg = Json.toJson(titles);
             	
@@ -77,7 +84,7 @@ public class TestExcelModule extends BaseModule
             	msg = "system error";
             }
         }
-        System.out.println(Json.toJson(excelConf.toProperties()));
+        //System.out.println(Json.toJson(excelConf.toProperties()));
         System.out.println(msg);
         return re.setv("msg",msg);
 	}

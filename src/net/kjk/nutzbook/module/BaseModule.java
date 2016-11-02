@@ -20,7 +20,7 @@ public abstract class BaseModule {
 	 */
 	protected int getRecordByData(String sqlStr)
 	{
-		Sql sql = dao.sqls().create("getPersonSum.data");
+		Sql sql = dao.sqls().create(sqlStr);
 
 		sql.setCallback(new SqlCallback()
 		{

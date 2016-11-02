@@ -11,6 +11,7 @@ import net.kjk.nutzbook.bean.Category;
 import net.kjk.nutzbook.bean.Department;
 import net.kjk.nutzbook.bean.Grade;
 import net.kjk.nutzbook.bean.UserInfo;
+import net.kjk.nutzbook.service.PersonService;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.service.UserService;
 import net.kjk.nutzbook.toolkit.PageToolKit;
@@ -44,6 +45,7 @@ public class PersonModule extends BaseModule
 {
 	@Inject protected UserService userService;
 	@Inject protected UserInfoService userInfoService;
+	@Inject protected PersonService personService;
 	@Inject protected PropertiesProxy excelConf;
 	
 	@At
@@ -193,13 +195,14 @@ public class PersonModule extends BaseModule
         } else if (tf == null) {
             msg = "empty";
         } else {
-            try {     	
+            try {
+            	// 获取临时文件
             	File f = tf.getFile();                       
             	String path = f.getPath();
             	
-            	// 判断标题是否正确
-            	String[] titles = ReadExcel.readExcelTitle(path);
-            	if(null == titles)
+            	// 更新
+            	int r = personService.InsertFromExcel(path);
+            	if(-1 == r)
             	{
             		// 说明出错了。
             		msg = "标题存在不对";

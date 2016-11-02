@@ -26,11 +26,11 @@ public class PersonService extends BaseService
 	/*
 	 * -1 表示标题头不对
 	 */
-	//@Aop(TransAop.READ_COMMITTED)
-	public int InsertFromExcel(String path,String[] titles)
+	@Aop(TransAop.READ_COMMITTED)
+	public int InsertFromExcel(String path)
 	{
 		// 判断头是否正常
-		int r = checkExcelTitle(titles);
+		int r = checkExcelTitle(path);
 		if( r == 0)
 		{
 			return -1;
@@ -44,12 +44,33 @@ public class PersonService extends BaseService
 		List<Department> deps = dao.query(Department.class,null);
 		
 		// 正常的话，读取excel表
-		
-		Trans.exec(Connection.TRANSACTION_READ_COMMITTED,new Atom(){
-		    public void run() {
-		        
-		    }
-		});
+		/*
+		 * 0 - 姓名      1 - 性别   2 - 出生年月
+		 * 3 - 身份证  4 - 参加工作时间  5 - 职别
+		 * 6 - 类别  7 - 银行卡账号  8 - 部门
+		 * 9 - 工号
+		 */
+		List<String> contents = ReadExcel.readExcelContentToList(path);
+		List<Map> tm = null;
+		for(int i = 0; i< contents.size(); i++ )
+        {
+        	String[] t =  new String[10];
+        	t = contents.get(i).split(",");
+        	
+        	// 先找是否存在
+        	tm = fetchData("select user_id from t_user_info where ic_card = '" + t[3] + "'");
+        	
+        	if( tm == null)
+        	{
+        		// 空的话，先在 t_user 插入
+        	}
+        	else
+        	{
+        		
+        	}
+        	
+        	
+        }
 		// 根据 r - 身份证信息，分开两批，一批是新用户，另一批是老用户
 		
 		// 新用户的话，就先插入 t_user 在，再插入 t_user_info，因为不多，就不要考虑那么多啦。 
@@ -58,21 +79,14 @@ public class PersonService extends BaseService
 		return 0;
 	}
 	
-	private List<Map> getExcelContent()
-	{
-		List<Map> content = new ArrayList<Map>();
-		
-		return content;
-	}
-	
 	/*
 	 * 判断是否存在必须项目
 	 */
-	private Boolean checkExcelTitle(String path)
+	private int checkExcelTitle(String path)
 	{
 		String[] needStr = {"姓名","性别","出生年月","身份证号码","参加工作时间","职别","类别","银行卡账号","部门","工号"};
 		String[] titles = ReadExcel.readExcelTitle(path);
-		Boolean flag = true;
+		int flag = 1;
 		
 		for(int i = 0; i < needStr.length; i++)
 		{
@@ -82,7 +96,7 @@ public class PersonService extends BaseService
 			}
 			else
 			{
-				flag = false;
+				flag = 0;
 				break;
 			}
 				

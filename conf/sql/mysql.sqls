@@ -45,6 +45,11 @@ from t_grade;
 select *
 from t_category;
 
+/* selectPersonByIdCard.data */
+select user_id
+from t_user_info
+where id_card = $id_card;
+
 
 
 

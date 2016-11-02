@@ -18,14 +18,15 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
 
 public class ReadExcel
 {
 
-	private static POIFSFileSystem fs;
-	private static HSSFWorkbook wb;
-	private static HSSFSheet sheet;
-	private static HSSFRow row;
+//	private static POIFSFileSystem fs;
+//	private static HSSFWorkbook wb;
+//	private static HSSFSheet sheet;
+//	private static HSSFRow row;
 
 	/**
 	 * 读取Excel表格表头的内容
@@ -35,27 +36,33 @@ public class ReadExcel
 	 */
 	public static String[] readExcelTitle(String path)
 	{
+		POIFSFileSystem fs;
+		HSSFWorkbook wb;
+		HSSFSheet sheet;
+		HSSFRow row;
 		try
 		{
 			InputStream is = new FileInputStream(path);
 			fs = new POIFSFileSystem(is);
 			wb = new HSSFWorkbook(fs);
+			
+			sheet = wb.getSheetAt(0);
+			row = sheet.getRow(0);
+			// 标题总列数
+			int colNum = row.getPhysicalNumberOfCells();
+			System.out.println("colNum:" + colNum);
+			String[] title = new String[colNum];
+			for (int i = 0; i < colNum; i++)
+			{
+				// title[i] = getStringCellValue(row.getCell((short) i));
+				title[i] = getCellFormatValue(row.getCell((short) i));
+			}
+			return title;
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		sheet = wb.getSheetAt(0);
-		row = sheet.getRow(0);
-		// 标题总列数
-		int colNum = row.getPhysicalNumberOfCells();
-		System.out.println("colNum:" + colNum);
-		String[] title = new String[colNum];
-		for (int i = 0; i < colNum; i++)
-		{
-			// title[i] = getStringCellValue(row.getCell((short) i));
-			title[i] = getCellFormatValue(row.getCell((short) i));
-		}
-		return title;
+		return null;
 	}
 
 	/**
@@ -100,46 +107,7 @@ public class ReadExcel
 
 	}
 	
-	/**
-	 * 读取Excel数据内容
-	 * 
-	 * @param InputStream
-	 * @return Map 包含单元格数据内容的Map对象
-	 */
-	public static List<Map> readExcelContentToListMap(String path,Map<String,String>title)
-	{
-		List<Map> content = new ArrayList<Map>();
-		String[] ss = readExcelTitle(path);
-		
-		try
-		{
-			InputStream is = new FileInputStream(path);
-			fs = new POIFSFileSystem(is);
-			wb = new HSSFWorkbook(fs);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		sheet = wb.getSheetAt(0);
-		// 得到总行数
-		int rowNum = sheet.getLastRowNum();
-		row = sheet.getRow(0);
-		int colNum = row.getPhysicalNumberOfCells();
-		// 正文内容应该从第二行开始,第一行为表头的标题
-		for (int i = 1; i <= rowNum; i++)
-		{
-			row = sheet.getRow(i);
-			Map m = new HashMap();
-			int j = 0;
-			while (j < colNum)
-			{
-				m.put(ss[j], getCellFormatValue(row.getCell((short) j)).trim());
-				j++;
-			}
-			content.add(m);
-		}
-		return content;
-	}
+	
 
 	/**
 	 * 读取Excel数据内容
@@ -149,6 +117,11 @@ public class ReadExcel
 	 */
 	public static Map<Integer, String> readExcelContent(String path)
 	{
+		POIFSFileSystem fs;
+		HSSFWorkbook wb;
+		HSSFSheet sheet;
+		HSSFRow row;
+		
 		Map<Integer, String> content = new HashMap<Integer, String>();
 		String str = "";
 		try
@@ -156,33 +129,88 @@ public class ReadExcel
 			InputStream is = new FileInputStream(path);
 			fs = new POIFSFileSystem(is);
 			wb = new HSSFWorkbook(fs);
+			sheet = wb.getSheetAt(0);
+			
+			// 得到总行数
+			int rowNum = sheet.getLastRowNum();
+			row = sheet.getRow(0);
+			int colNum = row.getPhysicalNumberOfCells();
+			// 正文内容应该从第二行开始,第一行为表头的标题
+			for (int i = 1; i <= rowNum; i++)
+			{
+				row = sheet.getRow(i);
+				int j = 0;
+				while (j < colNum)
+				{
+					// 每个单元格的数据内容用"-"分割开，以后需要时用String类的replace()方法还原数据
+					// 也可以将每个单元格的数据设置到一个javabean的属性中，此时需要新建一个javabean
+					// str += getStringCellValue(row.getCell((short) j)).trim() +
+					// "-";
+					str += getCellFormatValue(row.getCell((short) j)).trim() + ",";
+					j++;
+				}
+				content.put(i, str);
+				str = "";
+			}
+			return content;
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		sheet = wb.getSheetAt(0);
-		// 得到总行数
-		int rowNum = sheet.getLastRowNum();
-		row = sheet.getRow(0);
-		int colNum = row.getPhysicalNumberOfCells();
-		// 正文内容应该从第二行开始,第一行为表头的标题
-		for (int i = 1; i <= rowNum; i++)
+		
+		return null;
+	}
+	
+	/**
+	 * 读取Excel数据内容
+	 * 
+	 * @param InputStream
+	 * @return Map 包含单元格数据内容的Map对象
+	 */
+	public static List<String> readExcelContentToList(String path)
+	{
+		POIFSFileSystem fs;
+		HSSFWorkbook wb;
+		HSSFSheet sheet;
+		HSSFRow row;
+		
+		List<String> content = new ArrayList<String>();
+		String str = "";
+		try
 		{
-			row = sheet.getRow(i);
-			int j = 0;
-			while (j < colNum)
+			InputStream is = new FileInputStream(path);
+			fs = new POIFSFileSystem(is);
+			wb = new HSSFWorkbook(fs);
+			sheet = wb.getSheetAt(0);
+			
+			// 得到总行数
+			int rowNum = sheet.getLastRowNum();
+			row = sheet.getRow(0);
+			int colNum = row.getPhysicalNumberOfCells();
+			// 正文内容应该从第二行开始,第一行为表头的标题
+			for (int i = 1; i <= rowNum; i++)
 			{
-				// 每个单元格的数据内容用"-"分割开，以后需要时用String类的replace()方法还原数据
-				// 也可以将每个单元格的数据设置到一个javabean的属性中，此时需要新建一个javabean
-				// str += getStringCellValue(row.getCell((short) j)).trim() +
-				// "-";
-				str += getCellFormatValue(row.getCell((short) j)).trim() + ",";
-				j++;
+				row = sheet.getRow(i);
+				int j = 0;
+				while (j < colNum)
+				{
+					// 每个单元格的数据内容用"-"分割开，以后需要时用String类的replace()方法还原数据
+					// 也可以将每个单元格的数据设置到一个javabean的属性中，此时需要新建一个javabean
+					// str += getStringCellValue(row.getCell((short) j)).trim() +
+					// "-";
+					str += getCellFormatValue(row.getCell((short) j)).trim() + ",";
+					j++;
+				}
+				content.add(str);
+				str = "";
 			}
-			content.put(i, str);
-			str = "";
+			return content;
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 		}
-		return content;
+		
+		return null;
 	}
 	
 	/**
@@ -196,6 +224,7 @@ public class ReadExcel
 		String cellvalue = "";
 		if (cell != null)
 		{
+			cell.setCellType(Cell.CELL_TYPE_STRING);
 			// 判断当前Cell的Type
 			switch (cell.getCellType())
 			{
@@ -235,6 +264,7 @@ public class ReadExcel
 		{
 			cellvalue = "";
 		}
+		//cellvalue = cell.getRichStringCellValue().getString();
 		return cellvalue;
 
 	}
@@ -280,7 +310,7 @@ public class ReadExcel
 	}
 
 	public static <T> List<T> readExcels(Class<T> clazz,
-			Map<String, String> oldMap, String[] fieldNames,
+			/*Map<String, String> oldMap,*/ String[] fieldNames,
 			Map<Integer, String> excelMaps) throws Exception
 	{
 		List<T> dataModels = new ArrayList<T>();
