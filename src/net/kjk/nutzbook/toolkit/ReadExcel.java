@@ -161,6 +161,121 @@ public class ReadExcel
 		return null;
 	}
 	
+	/*
+	 * 换个号看点的
+	 */
+	public static List<List<String>> readExcelContentToListList(String path)
+	{
+		POIFSFileSystem fs;
+		HSSFWorkbook wb;
+		HSSFSheet sheet;
+		HSSFRow row;
+		
+		List<List<String>> content = new ArrayList<List<String>>();
+		try
+		{
+			InputStream is = new FileInputStream(path);
+			fs = new POIFSFileSystem(is);
+			wb = new HSSFWorkbook(fs);
+			sheet = wb.getSheetAt(0);
+			
+			// 得到总行数
+			int rowNum = sheet.getLastRowNum();
+			row = sheet.getRow(0);
+			int colNum = row.getPhysicalNumberOfCells();
+			// 正文内容应该从第二行开始,第一行为表头的标题
+			for (int i = 1; i <= rowNum; i++)
+			{
+				row = sheet.getRow(i);
+				int j = 0;
+				List<String> t = new ArrayList<String>();
+				while (j < colNum)
+				{
+					t.add(getCellFormatValue(row.getCell((short) j)).trim());
+					j++;
+				}
+				content.add(t);
+			}
+			return content;
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/*
+	 * 换个号看点的
+	 */
+	public static List<List<String>> readExcelContentToListList(String path,Map<String,String>field,Map<String,String> grade,
+			                                                    Map<String,String> cate,Map<String,String> dep)
+	{
+		POIFSFileSystem fs;
+		HSSFWorkbook wb;
+		HSSFSheet sheet;
+		HSSFRow row;
+		
+		List<List<String>> content = new ArrayList<List<String>>();
+		try
+		{
+			InputStream is = new FileInputStream(path);
+			fs = new POIFSFileSystem(is);
+			wb = new HSSFWorkbook(fs);
+			sheet = wb.getSheetAt(0);
+			
+			// 得到总行数
+			int rowNum = sheet.getLastRowNum();
+			row = sheet.getRow(0);
+			int colNum = row.getPhysicalNumberOfCells();
+			// 正文内容应该从第二行开始,第一行为表头的标题
+			String temp = "";
+			int gradeIndex = Integer.parseInt(field.get("grade_name"));
+			int cateIndex = Integer.parseInt(field.get("cate_name"));
+			int depIndex = Integer.parseInt(field.get("dep_name"));
+			for (int i = 1; i <= rowNum; i++)
+			{
+				row = sheet.getRow(i);
+				int j = 0;
+				List<String> t = new ArrayList<String>();
+				while (j < colNum)
+				{
+					/*
+					 * 高耦合了这里
+					 * 5 - 职别     6 - 类别    8 - 部门
+					 */
+					temp = getCellFormatValue(row.getCell((short) j)).trim();
+					
+					
+					if( j == gradeIndex)
+					{
+						temp  = grade.get(temp);
+						if(temp == null)
+							temp = "";
+					}else if(j == cateIndex)
+					{
+						temp  = cate.get(temp);
+						if(temp == null)
+							temp = "";
+					}
+					else if(j == depIndex)
+					{
+						temp  = dep.get(temp);
+						if(temp == null)
+							temp = "";
+					}
+					t.add(temp);
+					j++;
+				}
+				content.add(t);
+			}
+			return content;
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	/**
 	 * 读取Excel数据内容
 	 * 

@@ -38,4 +38,22 @@ public class UserService extends IdNameEntityService<User>
 		
 		return o.getId();
 	}
+	
+	public int add(String IdCard){
+		User u = new User();
+		
+		u.setName(IdCard);
+		
+		// 去身份证后六位
+		String psw = IdCard.substring(6,14);
+		
+		u.setPassword(psw);
+		u.setStatus(1);
+		u.setCreatetime(new Date());
+		u.setUpdatetime(new Date());
+		
+		User o = dao().insert(u);
+		
+		return o.getId();
+	}
 }

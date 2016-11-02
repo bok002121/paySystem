@@ -69,4 +69,29 @@ public class UserInfoService extends IdNameEntityService<UserInfo>
 		
 		return sql.getList(UserInfo.class);
 	}
+	
+	
+	/*
+	 * 0 - 姓名      1 - 性别   2 - 出生年月
+	* 3 - 身份证  4 - 参加工作时间  5 - 职别
+	* 6 - 类别  7 - 银行卡账号  8 - 部门
+	* 9 - 工号
+	 */
+	public int insertListList(List<List<String>> contents)
+	{
+		String sqlStr = "insert into t_user(dep_name,dep_id)VALUES";
+		return 0;
+	}
+	
+	/*
+	 * 0 - 姓名      1 - 性别   2 - 出生年月
+	* 3 - 身份证  4 - 参加工作时间  5 - 职别
+	* 6 - 类别  7 - 银行卡账号  8 - 部门
+	* 9 - 工号  10 - id
+	 */
+	public int updateListList(List<List<String>> contents)
+	{
+		
+		return 0;
+	}
 }

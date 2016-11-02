@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.nutz.dao.Dao;
+import org.nutz.dao.Sqls;
 import org.nutz.dao.sql.Sql;
 import org.nutz.dao.sql.SqlCallback;
 import org.nutz.ioc.loader.annotation.Inject;
@@ -30,7 +31,7 @@ public abstract class BaseModule {
 				int sums = 0;
 				while (rs.next())
 				{
-					sums = rs.getInt("sums");
+					sums = rs.getInt(1);
 				}
 				return sums;
 			}
@@ -46,7 +47,7 @@ public abstract class BaseModule {
 	 */
 	protected int getRecordByStatement(String sqlStr)
 	{
-		Sql sql = dao.sqls().create(sqlStr);
+		Sql sql = Sqls.create(sqlStr);
 
 		sql.setCallback(new SqlCallback()
 		{
@@ -56,7 +57,7 @@ public abstract class BaseModule {
 				int sums = 0;
 				while (rs.next())
 				{
-					sums = rs.getInt("sums");
+					sums = rs.getInt(1);
 				}
 				return sums;
 			}

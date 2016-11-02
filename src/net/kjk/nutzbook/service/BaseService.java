@@ -25,12 +25,16 @@ public abstract class BaseService
      */
     protected List<Map> fetchData(String sqlStr)
    	{
-   		Sql sql = dao.sqls().create(sqlStr);
+    	//System.out.println(sqlStr);
+   		Sql sql = Sqls.create(sqlStr);
+   		
+   		//System.out.println(sqlStr);
 
    		sql.setPager(null);
    		sql.setCallback(Sqls.callback.records());
    		
    		dao.execute(sql);
+   		
    		
    		return sql.getList(Map.class);
    	}
@@ -51,7 +55,7 @@ public abstract class BaseService
    				int sums = 0;
    				while (rs.next())
    				{
-   					sums = rs.getInt("sums");
+   					sums = rs.getInt(1);
    				}
    				return sums;
    			}
@@ -67,7 +71,7 @@ public abstract class BaseService
    	 */
    	protected int getRecordByStatement(String sqlStr)
    	{
-   		Sql sql = dao.sqls().create(sqlStr);
+   		Sql sql = Sqls.create(sqlStr);
 
    		sql.setCallback(new SqlCallback()
    		{
@@ -77,7 +81,7 @@ public abstract class BaseService
    				int sums = 0;
    				while (rs.next())
    				{
-   					sums = rs.getInt("sums");
+   					sums = rs.getInt(1);
    				}
    				return sums;
    			}

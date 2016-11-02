@@ -15,7 +15,6 @@ import net.kjk.nutzbook.service.PersonService;
 import net.kjk.nutzbook.service.UserInfoService;
 import net.kjk.nutzbook.service.UserService;
 import net.kjk.nutzbook.toolkit.PageToolKit;
-import net.kjk.nutzbook.toolkit.ReadExcel;
 
 import org.nutz.aop.interceptor.ioc.TransAop;
 import org.nutz.dao.DaoException;
@@ -23,7 +22,6 @@ import org.nutz.dao.Sqls;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Sql;
 import org.nutz.ioc.aop.Aop;
-import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.json.Json;
@@ -35,7 +33,6 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.impl.AdaptorErrorContext;
-import org.nutz.mvc.upload.FieldMeta;
 import org.nutz.mvc.upload.TempFile;
 import org.nutz.mvc.upload.UploadAdaptor;
 
@@ -46,7 +43,6 @@ public class PersonModule extends BaseModule
 	@Inject protected UserService userService;
 	@Inject protected UserInfoService userInfoService;
 	@Inject protected PersonService personService;
-	@Inject protected PropertiesProxy excelConf;
 	
 	@At
 	@GET
@@ -74,8 +70,7 @@ public class PersonModule extends BaseModule
 	{
 		NutMap re = new NutMap();
 		// 获取传进来的值	
-		String psw = info.getIdCard().substring(6,14);
-		int newUserId = userService.add(info.getIdCard(), psw);
+		int newUserId = userService.add(info.getIdCard());
 		System.out.println(newUserId);
 		userInfoService.add(newUserId,info);
 		
