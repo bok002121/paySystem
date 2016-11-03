@@ -50,6 +50,11 @@ select user_id
 from t_user_info
 where id_card = $id_card;
 
+/* insertUserInfo.data */
+insert into t_user_info(user_id,name,sex,birthday,id_card,join_time,grade_id,cate_id,ic_card,dep_id,job_no)
+VALUES
+(@id,@name,@sex,@birthday,@id_card,@join_time,@grade_id,@cate_id,@ic_card,@dep_id,@job_no)
+
 
 
 

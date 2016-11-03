@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.kjk.nutzbook.bean.Category;
-import net.kjk.nutzbook.bean.Department;
-import net.kjk.nutzbook.bean.Grade;
 import net.kjk.nutzbook.toolkit.ReadExcel;
 
 import org.nutz.aop.interceptor.ioc.TransAop;
@@ -26,6 +23,7 @@ import org.nutz.json.Json;
 public class PersonService extends BaseService
 {
 	@Inject protected UserService userService;
+	@Inject protected UserInfoService userInfoService;
 	@Inject protected PropertiesProxy excelConf;
 	/*
 	 * -1 表示标题头不对
@@ -54,8 +52,8 @@ public class PersonService extends BaseService
 		 * 6 - 类别  7 - 银行卡账号  8 - 部门
 		 * 9 - 工号
 		 */
-		
-		List<List<String>> contents = ReadExcel.readExcelContentToListList(path,excelConf.toMap(),
+		Map<String,String> field = excelConf.toMap();
+		List<List<String>> contents = ReadExcel.readExcelContentToListList(path,field,
 				                                                   gradeMap,cateMap,depMap);
 		System.out.println(Json.toJson(contents));
 		List<Map> tm = null;
@@ -84,14 +82,20 @@ public class PersonService extends BaseService
         	}
         }
 		// 遍历新用户集合
+		userInfoService.insertListList(newContents, field);
 		
 		// 遍历老用户集合
+		userInfoService.updateListList(oldContents, field);
 		
 		System.out.println(Json.toJson(newContents));
 		
 		System.out.println(Json.toJson(oldContents));
 		
-		return 0;
+		newContents.clear();
+		oldContents.clear();
+		contents.clear();
+		
+		return contents.size();
 	}
 	
 	/*

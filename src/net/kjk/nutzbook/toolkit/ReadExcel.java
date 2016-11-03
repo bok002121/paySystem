@@ -250,18 +250,18 @@ public class ReadExcel
 					{
 						temp  = grade.get(temp);
 						if(temp == null)
-							temp = "";
+							temp = "6";
 					}else if(j == cateIndex)
 					{
 						temp  = cate.get(temp);
 						if(temp == null)
-							temp = "";
+							temp = "1";
 					}
 					else if(j == depIndex)
 					{
 						temp  = dep.get(temp);
 						if(temp == null)
-							temp = "";
+							temp = "3";
 					}
 					t.add(temp);
 					j++;

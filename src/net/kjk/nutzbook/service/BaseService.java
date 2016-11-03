@@ -28,7 +28,7 @@ public abstract class BaseService
     	//System.out.println(sqlStr);
    		Sql sql = Sqls.create(sqlStr);
    		
-   		//System.out.println(sqlStr);
+   		System.out.println(sqlStr);
 
    		sql.setPager(null);
    		sql.setCallback(Sqls.callback.records());

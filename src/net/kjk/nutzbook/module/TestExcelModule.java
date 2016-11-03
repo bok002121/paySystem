@@ -11,6 +11,7 @@ import net.kjk.nutzbook.bean.UserInfo;
 import net.kjk.nutzbook.toolkit.ReadExcel;
 
 import org.nutz.dao.DaoException;
+import org.nutz.dao.sql.Sql;
 import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -32,6 +33,29 @@ import org.nutz.mvc.upload.UploadAdaptor;
 public class TestExcelModule extends BaseModule
 {
 	@Inject protected PropertiesProxy excelConf;
+	
+	@At
+	public void insertPreson()
+	{
+		Sql sql = dao.sqls().create("insertUserInfo.data");
+		
+		sql.params().set("id", 1).set("name", "hello").set("sex", "女")
+		.set("birthday", "2016-11-11").set("id_card", "123456").set("join_time", "2016-11-11")
+		.set("grade_id", 1).set("cate_id", 1).set("ic_card", "341342342").set("dep_id", 12)
+		.set("job_no", "007");
+		sql.addBatch();
+		
+		sql.params().set("id", 3).set("name", "hello").set("sex", "女")
+		.set("birthday", "2016-11-11").set("id_card", "123456").set("join_time", "2016-11-11")
+		.set("grade_id", 1).set("cate_id", 1).set("ic_card", "341342342").set("dep_id", 12)
+		.set("job_no", "007");
+		sql.addBatch();
+		
+		dao.execute(sql);
+	}
+	
+	
+	
 	@At
 	@AdaptBy(type=UploadAdaptor.class, args={"${app.root}/WEB-INF/tmp", "8192", "utf-8", "20000", "102400"})
     @POST
